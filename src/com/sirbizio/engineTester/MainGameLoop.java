@@ -109,12 +109,14 @@ public class MainGameLoop {
 	while(!Display.isCloseRequested()) {
 	    entity.increaseRotation(03f, 1.5f, 1);
 	    camera.move();
-	    renderer.prepare();
+	    
 	    //render
+	    renderer.prepare();
 	    shader.start();
 	    shader.loadViewMatrix(camera);
 	    renderer.render(entity, shader);
 	    shader.stop();
+	    
 	    DisplayManager.updateDisplay();
 	}
 	
