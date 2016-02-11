@@ -15,36 +15,36 @@ import com.sirbizio.shaders.StaticShader;
 import com.sirbizio.textures.ModelTexture;
 
 public class MainGameLoop {
-    public static void main(String[] args) {
-	DisplayManager.createDisplay();
-	Loader loader = new Loader();
-	StaticShader shader = new StaticShader();
-	Renderer renderer = new Renderer(shader);
-	
-	RawModel model = OBJLoader.loadObjModel("dragon", loader);
-	ModelTexture texture = new ModelTexture(loader.loadTexture("white"));
-	TexuredModel texturedmodel = new TexuredModel(model, texture);
-	
-	Entity entity = new Entity(texturedmodel, new Vector3f(100f,0,-50f),0,0,0,2);
-	
-	Camera camera = new Camera();
-	
-	while(!Display.isCloseRequested()) {
-	    entity.increaseRotation(0, 1, 0);
-	    camera.move();
-	    
-	    //render
-	    renderer.prepare();
-	    shader.start();
-	    shader.loadViewMatrix(camera);
-	    renderer.render(entity, shader);
-	    shader.stop();
-	    
-	    DisplayManager.updateDisplay();
+	public static void main(String[] args) {
+		DisplayManager.createDisplay();
+		Loader loader = new Loader();
+		StaticShader shader = new StaticShader();
+		Renderer renderer = new Renderer(shader);
+
+		RawModel model = OBJLoader.loadObjModel("dragon", loader);
+		ModelTexture texture = new ModelTexture(loader.loadTexture("white"));
+		TexuredModel texturedmodel = new TexuredModel(model, texture);
+
+		Entity entity = new Entity(texturedmodel, new Vector3f(0, 0, -25), 0, 0, 0, 2);
+
+		Camera camera = new Camera();
+
+		while (!Display.isCloseRequested()) {
+			entity.increaseRotation(0, 1, 0);
+			camera.move();
+
+			// render
+			renderer.prepare();
+			shader.start();
+			shader.loadViewMatrix(camera);
+			renderer.render(entity, shader);
+			shader.stop();
+
+			DisplayManager.updateDisplay();
+		}
+
+		shader.cleanUp();
+		loader.cleanUp();
+		DisplayManager.closeDisplay();
 	}
-	
-	shader.cleanUp();
-	loader.cleanUp();
-	DisplayManager.closeDisplay();
-    }
 }
