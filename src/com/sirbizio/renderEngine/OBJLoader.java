@@ -12,19 +12,15 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.sirbizio.models.RawModel;
+import com.sirbizio.toolbox.StreamUtils;
 
 public class OBJLoader {
 
 	public static RawModel loadObjModel(String filename, Loader loader) {
 		InputStream is = OBJLoader.class.getResourceAsStream("/resources/" + filename + ".obj");
 		
-		try {
-			if(is == null)
-				throw new FileNotFoundException("couldn't find file: res/resources/" + filename + ".obj");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+		if(is == null)
+			throw new RuntimeException(new FileNotFoundException("couldn't find file: res/resources/" + filename + ".obj"));
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		String line;
@@ -75,14 +71,9 @@ public class OBJLoader {
 				line = reader.readLine();
 			}	
 		} catch(IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
-			try {
-				reader.close();
-			} catch (IOException e) {
-				System.err.println("Couldn't close reader!");
-				e.printStackTrace();
-			}
+			StreamUtils.closeQuietly(reader);
 		}
 		
 		verticesArray = new float[vertices.size() * 3];
