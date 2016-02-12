@@ -9,7 +9,6 @@ public class Light {
 	private Vector3f colour;
 
 	public Light(Vector3f position, Vector3f colour) {
-		super();
 		this.position = position;
 		this.colour = colour;
 	}

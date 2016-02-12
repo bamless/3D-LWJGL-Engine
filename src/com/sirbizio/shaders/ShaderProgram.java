@@ -1,7 +1,9 @@
 package com.sirbizio.shaders;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 
@@ -36,7 +38,7 @@ public abstract class ShaderProgram {
 	protected abstract void getAllUniformLocations();
 
 	/**
-	 * Gets the uniform varible
+	 * Gets the uniform variable
 	 * 
 	 * @param uniformNam the name
 	 * @return
@@ -106,9 +108,11 @@ public abstract class ShaderProgram {
 	 */
 	protected int loadShader(String file, int type) {
 		StringBuilder shaderSource = new StringBuilder();
-		BufferedReader reader = null;
+		InputStream is = ShaderProgram.class.getResourceAsStream(file);
+		if(is == null)
+			throw new RuntimeException(new FileNotFoundException("Couldn't find file res"+file));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		try {
-			reader = new BufferedReader(new InputStreamReader(ShaderProgram.class.getResourceAsStream(file)));
 			String line;
 			while ((line = reader.readLine()) != null)
 				shaderSource.append(line).append("\n");

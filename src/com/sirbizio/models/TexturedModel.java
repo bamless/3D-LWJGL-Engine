@@ -2,12 +2,12 @@ package com.sirbizio.models;
 
 import com.sirbizio.textures.ModelTexture;
 
-public class TexuredModel {
+public class TexturedModel {
     private RawModel rawModel;
     
     private ModelTexture texture;
     
-    public TexuredModel(RawModel model, ModelTexture texture) {
+    public TexturedModel(RawModel model, ModelTexture texture) {
 	this.rawModel = model;
 	this.texture = texture;
     }

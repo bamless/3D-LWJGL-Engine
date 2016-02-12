@@ -2,16 +2,16 @@ package com.sirbizio.entities;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import com.sirbizio.models.TexuredModel;
+import com.sirbizio.models.TexturedModel;
 
 public class Entity {
 
-    private TexuredModel model;
+    private TexturedModel model;
     private Vector3f position;
     private float rotX, rotY, rotZ;
     private float scale;
     
-    public Entity(TexuredModel model, Vector3f position, float rotX,
+    public Entity(TexturedModel model, Vector3f position, float rotX,
 	    float rotY, float rotZ, float scale) {
 	super();
 	this.model = model;
@@ -34,10 +34,10 @@ public class Entity {
 	this.rotZ += dz;
     }
     
-    public TexuredModel getModel() {
+    public TexturedModel getModel() {
         return model;
     }
-    public void setModel(TexuredModel model) {
+    public void setModel(TexturedModel model) {
         this.model = model;
     }
     

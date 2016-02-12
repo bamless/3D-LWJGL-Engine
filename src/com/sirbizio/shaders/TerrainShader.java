@@ -6,10 +6,10 @@ import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Light;
 import com.sirbizio.toolbox.Maths;
 
-public class StaticShader extends ShaderProgram {
+public class TerrainShader extends ShaderProgram{
 
-	private static final String VERTEX_FILE = "/resources/shaders/vertexShader.vert";
-	private static final String FRAGMENT_FILE = "/resources/shaders/fragmentShader.frag";
+	private static final String VERTEX_FILE = "/resources/shaders/terrainVertexShader.vert";
+	private static final String FRAGMENT_FILE = "/resources/shaders/terrainFragmentShader.frag";
 
 	private int locationTransformationMatrix;
 	private int locationProjectionMatrix;
@@ -19,7 +19,7 @@ public class StaticShader extends ShaderProgram {
 	private int locationShineDamper;
 	private int locationReflectivity;
 
-	public StaticShader() {
+	public TerrainShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
 
@@ -63,5 +63,5 @@ public class StaticShader extends ShaderProgram {
 	public void loadProjectionMatrix(Matrix4f matrix) {
 		loadMatrix(locationProjectionMatrix, matrix);
 	}
-
+	
 }
