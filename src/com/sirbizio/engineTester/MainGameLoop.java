@@ -27,10 +27,21 @@ public class MainGameLoop {
 		TexturedModel texturedmodel = new TexturedModel(model, texture);
 		Entity dragon = new Entity(texturedmodel, new Vector3f(150, 0, -150), 0, 0, 0, 2);
 		
+		RawModel grassModel = OBJLoader.loadObjModel("grassModel", loader);
+		ModelTexture grassTexture = new ModelTexture(loader.loadTexture("grassTexture"));
+		grassTexture.setHasTransparency(true);
+		grassTexture.setUseFakeLighting(true);
+		TexturedModel grassTexModel = new TexturedModel(grassModel, grassTexture);
+		Entity grass = new Entity(grassTexModel, new Vector3f(100, 0, -100), 0, 0, 0, 1);
+		
+		Entity fern = new Entity(new TexturedModel(OBJLoader.loadObjModel("fern", loader), 
+				new ModelTexture(loader.loadTexture("fern"))), new Vector3f(20, 0, -20),  0, 0, 0, 1);
+		fern.getModel().getTexture().setHasTransparency(true);
+		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("grass")));
 		Terrain terrain2 = new Terrain(1, -1, loader, new ModelTexture(loader.loadTexture("grass")));
 		
-		Light light = new Light(new Vector3f(200, 10000, 100), new Vector3f(1, 1, 1));
+		Light light = new Light(new Vector3f(2000, 20000, 20000), new Vector3f(1, 1, 1));
 		
 		Camera camera = new Camera();
 
@@ -43,6 +54,8 @@ public class MainGameLoop {
 			
 			//process entities and terrains
 			renderer.processEntity(dragon);
+			renderer.processEntity(grass);
+			renderer.processEntity(fern);
 			renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
 			

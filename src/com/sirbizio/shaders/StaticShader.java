@@ -18,7 +18,8 @@ public class StaticShader extends ShaderProgram {
 	private int locationLightColour;
 	private int locationShineDamper;
 	private int locationReflectivity;
-
+	private int locationUseFakeLighting;
+	
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
@@ -39,6 +40,11 @@ public class StaticShader extends ShaderProgram {
 		locationLightColour = getUniformLocation("lightColour");
 		locationShineDamper = getUniformLocation("shineDamper");
 		locationReflectivity = getUniformLocation("reflectivity");
+		locationUseFakeLighting = getUniformLocation("useFakeLighting");
+	}
+	
+	public void loadFakeLighting(boolean useFake) {
+		loadBoolean(locationUseFakeLighting, useFake);
 	}
 	
 	public void loadShineVariables(float damper, float reflectivity) {
