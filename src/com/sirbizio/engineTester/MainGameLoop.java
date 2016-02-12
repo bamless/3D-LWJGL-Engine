@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Entity;
 import com.sirbizio.entities.Light;
+import com.sirbizio.entities.Player;
 import com.sirbizio.models.RawModel;
 import com.sirbizio.models.TexturedModel;
 import com.sirbizio.objConverter.ModelData;
@@ -15,12 +16,15 @@ import com.sirbizio.renderEngine.Loader;
 import com.sirbizio.renderEngine.MasterRenderer;
 import com.sirbizio.terrains.Terrain;
 import com.sirbizio.textures.ModelTexture;
+import com.sirbizio.textures.TerrainTexture;
+import com.sirbizio.textures.TerrainTexturePack;
 
 public class MainGameLoop {
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 
+		//********ENTITIES********************
 		ModelData modelData = OBJFileLoader.loadOBJ("dragon");
 		RawModel model = loader.loadToVao(modelData);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("white"));
@@ -41,21 +45,37 @@ public class MainGameLoop {
 				new ModelTexture(loader.loadTexture("fern"))), new Vector3f(20, 0, -20),  0, 0, 0, 1);
 		fern.getModel().getTexture().setHasTransparency(true);
 		
-		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("grass")));
-		Terrain terrain2 = new Terrain(1, -1, loader, new ModelTexture(loader.loadTexture("grass")));
+		Player player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), texture), 0, 0, 0);
 		
+		//********TERRAINS STUFF**************
+		TerrainTexture bgTexture = new TerrainTexture(loader.loadTexture("grassy"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
+		
+		TerrainTexturePack texturePack = new TerrainTexturePack(bgTexture, rTexture, gTexture, bTexture);
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+		
+		
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
+		Terrain terrain2 = new Terrain(1, -1, loader, texturePack, blendMap);
+		
+		//********LIGHT CAMERA N' STUFF*******
 		Light light = new Light(new Vector3f(2000, 20000, 20000), new Vector3f(1, 1, 1));
 		
 		Camera camera = new Camera();
 
 		MasterRenderer renderer = new MasterRenderer();
 		
+		//********GAME LOOP*******************
 		while (!Display.isCloseRequested()) {
 			camera.move();
 
+			player.move();
 			dragon.increaseRotation(0, 2, 0);
 			
 			//process entities and terrains
+			renderer.processEntity(player);
 			renderer.processEntity(dragon);
 			renderer.processEntity(grass);
 			renderer.processEntity(fern);
@@ -68,6 +88,7 @@ public class MainGameLoop {
 			DisplayManager.updateDisplay();
 		}
 
+		//********CLEAN UP THINGS**************
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();

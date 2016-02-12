@@ -13,22 +13,14 @@ public class Camera {
 	private float roll;
 	
 	public void move() {
-		if(Keyboard.isKeyDown(Keyboard.KEY_W))
-			position.z -= CAMERA_VELOXITY;
-		if(Keyboard.isKeyDown(Keyboard.KEY_D))
-			position.x += CAMERA_VELOXITY;
-		if(Keyboard.isKeyDown(Keyboard.KEY_A))
-			position.x -= CAMERA_VELOXITY;
-		if(Keyboard.isKeyDown(Keyboard.KEY_S))
-			position.z += CAMERA_VELOXITY;
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
-			position.y += CAMERA_VELOXITY;
-		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-			position.y -= CAMERA_VELOXITY;
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-			yaw -= CAMERA_VELOXITY;
+			position.z -= CAMERA_VELOXITY;
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-			yaw += CAMERA_VELOXITY;
+			position.x += CAMERA_VELOXITY;
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+			position.x -= CAMERA_VELOXITY;
+		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+			position.z += CAMERA_VELOXITY;
 	}
 	
 	public Vector3f getPosition() {
