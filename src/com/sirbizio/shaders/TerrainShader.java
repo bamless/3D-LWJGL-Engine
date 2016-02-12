@@ -1,6 +1,7 @@
 package com.sirbizio.shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Light;
@@ -18,6 +19,7 @@ public class TerrainShader extends ShaderProgram{
 	private int locationLightColour;
 	private int locationShineDamper;
 	private int locationReflectivity;
+	private int locationSkyColour;
 
 	public TerrainShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -39,6 +41,11 @@ public class TerrainShader extends ShaderProgram{
 		locationLightColour = getUniformLocation("lightColour");
 		locationShineDamper = getUniformLocation("shineDamper");
 		locationReflectivity = getUniformLocation("reflectivity");
+		locationSkyColour = getUniformLocation("skyColour");
+	}
+	
+	public void loadSkyColour(float r, float g, float b) {
+		loadVector(locationSkyColour, new Vector3f(r, g, b));
 	}
 	
 	public void loadShineVariables(float damper, float reflectivity) {

@@ -17,6 +17,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import com.sirbizio.models.RawModel;
+import com.sirbizio.objConverter.ModelData;
 
 /**
  * Loads a 3D model in memory by storing positional data in a VAO
@@ -55,6 +56,10 @@ public class Loader {
 		storeDataInAttributeList(2, 3, normals);
 		unbindVAO();
 		return new RawModel(vaoID, indices.length);
+	}
+	
+	public RawModel loadToVao(ModelData data) {
+		return this.loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices());
 	}
 
 	public int loadTexture(String fileName) {

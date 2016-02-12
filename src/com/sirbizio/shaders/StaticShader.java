@@ -1,6 +1,7 @@
 package com.sirbizio.shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Light;
@@ -19,6 +20,7 @@ public class StaticShader extends ShaderProgram {
 	private int locationShineDamper;
 	private int locationReflectivity;
 	private int locationUseFakeLighting;
+	private int locationSkyColour;
 	
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -41,6 +43,11 @@ public class StaticShader extends ShaderProgram {
 		locationShineDamper = getUniformLocation("shineDamper");
 		locationReflectivity = getUniformLocation("reflectivity");
 		locationUseFakeLighting = getUniformLocation("useFakeLighting");
+		locationSkyColour = getUniformLocation("skyColour");
+	}
+	
+	public void loadSkyColour(float r, float g, float b) {
+		loadVector(locationSkyColour, new Vector3f(r, g, b));
 	}
 	
 	public void loadFakeLighting(boolean useFake) {

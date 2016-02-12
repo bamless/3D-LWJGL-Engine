@@ -8,10 +8,11 @@ import com.sirbizio.entities.Entity;
 import com.sirbizio.entities.Light;
 import com.sirbizio.models.RawModel;
 import com.sirbizio.models.TexturedModel;
+import com.sirbizio.objConverter.ModelData;
+import com.sirbizio.objConverter.OBJFileLoader;
 import com.sirbizio.renderEngine.DisplayManager;
 import com.sirbizio.renderEngine.Loader;
 import com.sirbizio.renderEngine.MasterRenderer;
-import com.sirbizio.renderEngine.OBJLoader;
 import com.sirbizio.terrains.Terrain;
 import com.sirbizio.textures.ModelTexture;
 
@@ -20,21 +21,23 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 
-		RawModel model = OBJLoader.loadObjModel("dragon", loader);
+		ModelData modelData = OBJFileLoader.loadOBJ("dragon");
+		RawModel model = loader.loadToVao(modelData);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("white"));
 		texture.setReflectivity(100);
 		texture.setShineDamper(200);
 		TexturedModel texturedmodel = new TexturedModel(model, texture);
 		Entity dragon = new Entity(texturedmodel, new Vector3f(150, 0, -150), 0, 0, 0, 2);
 		
-		RawModel grassModel = OBJLoader.loadObjModel("grassModel", loader);
+		ModelData grassModelData = OBJFileLoader.loadOBJ("grassModel");
+		RawModel grassModel = loader.loadToVao(grassModelData);
 		ModelTexture grassTexture = new ModelTexture(loader.loadTexture("grassTexture"));
 		grassTexture.setHasTransparency(true);
 		grassTexture.setUseFakeLighting(true);
 		TexturedModel grassTexModel = new TexturedModel(grassModel, grassTexture);
 		Entity grass = new Entity(grassTexModel, new Vector3f(100, 0, -100), 0, 0, 0, 1);
 		
-		Entity fern = new Entity(new TexturedModel(OBJLoader.loadObjModel("fern", loader), 
+		Entity fern = new Entity(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("fern")), 
 				new ModelTexture(loader.loadTexture("fern"))), new Vector3f(20, 0, -20),  0, 0, 0, 1);
 		fern.getModel().getTexture().setHasTransparency(true);
 		
