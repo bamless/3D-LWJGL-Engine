@@ -15,6 +15,7 @@ public class LWJGLApplication implements Application {
 	
 	private ApplicationListener listener;
 	private InputProcessor inputProcessor;
+	private boolean hasFocus;
 	
 	private int lastMouseButton;
 	
@@ -41,15 +42,32 @@ public class LWJGLApplication implements Application {
 	@Override
 	public void onCreate() {
 		DisplayManager.createDisplay(config);
-		listener.onCreate();		
+		listener.onCreate();
 	}
 	
 	private void mainLoop() {
 		while(!Display.isCloseRequested()) {
+			if(!Display.isActive() && hasFocus) {
+				hasFocus = false;
+				onPause();
+			} else if(Display.isActive() && !hasFocus) {
+				hasFocus = true;
+				onResume();
+			}
 			checkForInputs();
 			listener.render();
 			DisplayManager.updateDisplay();
 		}
+	}
+	
+	@Override
+	public void onPause() {
+		listener.onPause();
+	}
+
+	@Override
+	public void onResume() {
+		listener.onResume();
 	}
 	
 	private void checkForInputs() {
@@ -72,6 +90,7 @@ public class LWJGLApplication implements Application {
 	
 	@Override
 	public void cleanUp() {
+		listener.onPause();
 		listener.cleanUp();
 		DisplayManager.closeDisplay();
 	}

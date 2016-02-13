@@ -15,6 +15,7 @@ import com.sirbizio.models.RawModel;
 import com.sirbizio.models.TexturedModel;
 import com.sirbizio.objConverter.ModelData;
 import com.sirbizio.objConverter.OBJFileLoader;
+import com.sirbizio.renderEngine.DisplayManager;
 import com.sirbizio.renderEngine.Loader;
 import com.sirbizio.renderEngine.MasterRenderer;
 import com.sirbizio.terrains.Terrain;
@@ -23,23 +24,24 @@ import com.sirbizio.textures.TerrainTexture;
 import com.sirbizio.textures.TerrainTexturePack;
 
 /**
- * A test application
+ * A test application class
  * @author fabrizio
  *
  */
 public class Test implements ApplicationListener {
 
 	private Player player;
+	private Entity dragon;
 	private List<Entity> entities = new ArrayList<>();
 	private List<Terrain> terrains = new ArrayList<>();
 	private Light sun;
 	
 	private Loader loader;
 	private MasterRenderer renderer;
-	
 	private Camera camera;
 	
 	private Random rand = new Random();
+	private boolean isActive = true;
 	
 	@Override
 	public void onCreate() {
@@ -57,6 +59,7 @@ public class Test implements ApplicationListener {
 		TexturedModel texturedmodel = new TexturedModel(model, texture);
 		Entity dragon = new Entity(texturedmodel, new Vector3f(150, 0, -150), 0, 0, 0, 2);
 		entities.add(dragon);
+		this.dragon = dragon;
 		
 		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), texture), 0, 0, 0);
 		
@@ -105,8 +108,11 @@ public class Test implements ApplicationListener {
 
 	@Override
 	public void render() {
-		camera.move();
-		player.move();
+		if(isActive) {
+			camera.move();
+			player.move();
+			dragon.increaseRotation(0, 2 * DisplayManager.getDelta() * 60, 0);
+		}
 		
 		renderer.processEntity(player);
 		for(Entity e : entities)
@@ -121,6 +127,16 @@ public class Test implements ApplicationListener {
 	public void cleanUp() {
 		loader.cleanUp();
 		renderer.cleanUp();
+	}
+
+	@Override
+	public void onPause() {
+		isActive = false;
+	}
+
+	@Override
+	public void onResume() {
+		isActive = true;
 	}
 
 }

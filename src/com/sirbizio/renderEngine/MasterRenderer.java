@@ -9,6 +9,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
+import com.sirbizio.application.Cleanable;
 import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Entity;
 import com.sirbizio.entities.Light;
@@ -17,7 +18,7 @@ import com.sirbizio.shaders.StaticShader;
 import com.sirbizio.shaders.TerrainShader;
 import com.sirbizio.terrains.Terrain;
 
-public class MasterRenderer {
+public class MasterRenderer implements Cleanable {
 	
 	private static final float FOV = 70;
 	private static final float NEAR_PLANE = 0.1f;
@@ -117,6 +118,7 @@ public class MasterRenderer {
 		projectionMatrix.m33 = 0;
 	}
 	
+	@Override
 	public void cleanUp() {
 		shader.cleanUp();
 		terrainShader.cleanUp();

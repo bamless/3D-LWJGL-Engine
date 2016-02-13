@@ -3,6 +3,8 @@ package com.sirbizio.entities;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.sirbizio.renderEngine.DisplayManager;
+
 public class Camera {
 
 	public final static float CAMERA_VELOXITY = 2;
@@ -14,13 +16,13 @@ public class Camera {
 	
 	public void move() {
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
-			position.z -= CAMERA_VELOXITY;
+			position.z -= CAMERA_VELOXITY * DisplayManager.getDelta() * 60;
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-			position.x += CAMERA_VELOXITY;
+			position.x += CAMERA_VELOXITY * DisplayManager.getDelta() * 60;
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-			position.x -= CAMERA_VELOXITY;
+			position.x -= CAMERA_VELOXITY * DisplayManager.getDelta() * 60;
 		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-			position.z += CAMERA_VELOXITY;
+			position.z += CAMERA_VELOXITY * DisplayManager.getDelta() * 60;
 	}
 	
 	public Vector3f getPosition() {

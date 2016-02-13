@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL30;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import com.sirbizio.application.Cleanable;
 import com.sirbizio.models.RawModel;
 import com.sirbizio.objConverter.ModelData;
 
@@ -27,7 +28,7 @@ import com.sirbizio.objConverter.ModelData;
  * @author Fabrizio
  *
  */
-public class Loader {
+public class Loader implements Cleanable {
 	/**
 	 * Keeps track of all the vaos created in memory
 	 */
@@ -83,6 +84,7 @@ public class Loader {
 		return textureID;
 	}
 
+	@Override
 	public void cleanUp() {
 		for (int vao : vaos)
 			GL30.glDeleteVertexArrays(vao);
