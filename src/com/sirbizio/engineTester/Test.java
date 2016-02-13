@@ -2,6 +2,7 @@ package com.sirbizio.engineTester;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -21,6 +22,11 @@ import com.sirbizio.textures.ModelTexture;
 import com.sirbizio.textures.TerrainTexture;
 import com.sirbizio.textures.TerrainTexturePack;
 
+/**
+ * A test application
+ * @author fabrizio
+ *
+ */
 public class Test implements ApplicationListener {
 
 	private Player player;
@@ -32,6 +38,8 @@ public class Test implements ApplicationListener {
 	private MasterRenderer renderer;
 	
 	private Camera camera;
+	
+	private Random rand = new Random();
 	
 	@Override
 	public void onCreate() {
@@ -50,21 +58,31 @@ public class Test implements ApplicationListener {
 		Entity dragon = new Entity(texturedmodel, new Vector3f(150, 0, -150), 0, 0, 0, 2);
 		entities.add(dragon);
 		
-		ModelData grassModelData = OBJFileLoader.loadOBJ("grassModel");
-		RawModel grassModel = loader.loadToVao(grassModelData);
-		ModelTexture grassTexture = new ModelTexture(loader.loadTexture("grassTexture"));
-		grassTexture.setHasTransparency(true);
-		grassTexture.setUseFakeLighting(true);
-		TexturedModel grassTexModel = new TexturedModel(grassModel, grassTexture);
-		Entity grass = new Entity(grassTexModel, new Vector3f(100, 0, -100), 0, 0, 0, 1);
-		entities.add(grass);
+		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), texture), 0, 0, 0);
 		
-		Entity fern = new Entity(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("fern")), 
-				new ModelTexture(loader.loadTexture("fern"))), new Vector3f(20, 0, -20),  0, 0, 0, 1);
-		fern.getModel().getTexture().setHasTransparency(true);
-		entities.add(fern);
+		//adds trees ferns and grass
+		TexturedModel treeModel = new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("lowPolyTree")), 
+				new ModelTexture(loader.loadTexture("lowPolyTree")));
+		TexturedModel fernModel = new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("fern")), 
+				new ModelTexture(loader.loadTexture("fern")));
+		fernModel.getTexture().setHasTransparency(true);
+		TexturedModel grassModel = new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("grassModel")), 
+				new ModelTexture(loader.loadTexture("grassTexture")));
+		grassModel.getTexture().setHasTransparency(true);
+		grassModel.getTexture().setUseFakeLighting(true);
 		
-		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), texture), 0, 0, -800);
+		for(int i = 0 ; i < 100 ; i++) {
+			Entity tree = new Entity(treeModel, rand.nextInt(1600), 0, -rand.nextInt(800));
+			entities.add(tree);
+		}
+		for(int i = 0 ; i < 250 ; i++) {
+			Entity fern = new Entity(fernModel, rand.nextInt(1600), 0, -rand.nextInt(800));
+			entities.add(fern);
+		}
+		for(int i = 0 ; i < 3500 ; i++) {
+			Entity grass = new Entity(grassModel, rand.nextInt(1600), 0, -rand.nextInt(800));
+			entities.add(grass);
+		}
 		
 		//********TERRAINS STUFF**************
 		TerrainTexture bgTexture = new TerrainTexture(loader.loadTexture("grassy"));

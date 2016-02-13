@@ -8,36 +8,37 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
-public class DisplayManager {
+import com.sirbizio.application.LWJGLConfiguration;
 
-	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 720;
-	public static final int FPS_CAP = 60;
+public class DisplayManager {
 	
 	private static long lastFrameTime;
 	private static float delta;
+	private static LWJGLConfiguration config;
 
-	public static void createDisplay() {
+	public static void createDisplay(LWJGLConfiguration config) {
+		DisplayManager.config = config;
 		ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
 
 		try {
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+			Display.setDisplayMode(new DisplayMode(config.width, config.height));
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("GameEngineTest");
 		} catch (LWJGLException e) {
 			throw new RuntimeException(e);
 		}
 
-		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		GL11.glViewport(0, 0, config.width, config.height);
 		lastFrameTime = getCurrentTime();
 	}
 
 	public static void updateDisplay() {
-		Display.sync(FPS_CAP);
+		Display.sync(config.limitFPS);
 		Display.update();
 		long currentFrameTime = getCurrentTime();
 		delta = (currentFrameTime - lastFrameTime)/1000f;
 		lastFrameTime = currentFrameTime;
+		if(config.logFPS) System.out.println(1/delta);
 	}
 	
 	public static float getDelta() {

@@ -11,14 +11,16 @@ import com.sirbizio.renderEngine.DisplayManager;
 public class LWJGLApplication implements Application {
 	
 	private static LWJGLApplication app;
+	private static LWJGLConfiguration config;
 	
 	private ApplicationListener listener;
 	private InputProcessor inputProcessor;
 	
 	private int lastMouseButton;
 	
-	public static void create(ApplicationListener listener) {
+	public static void create(ApplicationListener listener, LWJGLConfiguration configuration) {
 		if(app != null) throw new RuntimeException("An application already exists. Only one application can be created at any time!");
+		config = configuration;
 		app = new LWJGLApplication(listener);
 	}
 	
@@ -38,7 +40,7 @@ public class LWJGLApplication implements Application {
 	
 	@Override
 	public void onCreate() {
-		DisplayManager.createDisplay();
+		DisplayManager.createDisplay(config);
 		listener.onCreate();		
 	}
 	
