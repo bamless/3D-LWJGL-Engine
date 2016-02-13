@@ -64,7 +64,7 @@ public class Test implements ApplicationListener {
 		fern.getModel().getTexture().setHasTransparency(true);
 		entities.add(fern);
 		
-		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), texture), 0, 0, 0);
+		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), texture), 0, 0, -800);
 		
 		//********TERRAINS STUFF**************
 		TerrainTexture bgTexture = new TerrainTexture(loader.loadTexture("grassy"));
