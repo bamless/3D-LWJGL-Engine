@@ -21,7 +21,18 @@ public class DisplayManager {
 		ContextAttribs attribs = new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
 
 		try {
-			Display.setDisplayMode(new DisplayMode(config.width, config.height));
+	        DisplayMode displayMode = null;
+	        DisplayMode[] modes = Display.getAvailableDisplayModes();
+
+	        for (int i = 0; i < modes.length; i++) {
+	            if (modes[i].getWidth() == config.width && modes[i].getHeight() == config.height 
+	           		 	&& modes[i].isFullscreenCapable() && modes[i].getFrequency() == 60) {
+	                   displayMode = modes[i];
+	            }
+	        }
+			Display.setDisplayMode(displayMode);
+			Display.setFullscreen(config.fullscreen);
+			Display.setVSyncEnabled(config.vsync);
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("GameEngineTest");
 		} catch (LWJGLException e) {

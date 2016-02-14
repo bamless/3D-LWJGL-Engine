@@ -48,7 +48,6 @@ public class Test implements ApplicationListener {
 		//creates loader, renderer and camera
 		loader = new Loader();
 		renderer = new MasterRenderer();
-		camera = new Camera();
 		
 		//********ENTITIES********************
 		ModelData modelData = OBJFileLoader.loadOBJ("dragon");
@@ -61,7 +60,10 @@ public class Test implements ApplicationListener {
 		entities.add(dragon);
 		this.dragon = dragon;
 		
-		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), texture), 0, 0, 0);
+		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("person")), 
+				new ModelTexture(loader.loadTexture("playerTexture"))), 0, 0, 0);
+		//creates the camera
+		camera = new Camera(player);
 		
 		//adds trees ferns and grass
 		TexturedModel treeModel = new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("lowPolyTree")), 

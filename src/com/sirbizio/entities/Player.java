@@ -22,7 +22,6 @@ public class Player extends Entity {
 	
 	public Player(TexturedModel model, float x, float y, float z) {
 		super(model, x, y, z);
-		setScale(0.5f);
 	}
 
 	public void move() {

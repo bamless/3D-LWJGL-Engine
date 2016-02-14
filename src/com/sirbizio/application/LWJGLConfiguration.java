@@ -5,4 +5,6 @@ public class LWJGLConfiguration {
 	public int height = 720;
 	public int limitFPS = 60;
 	public boolean logFPS = false;
+	public boolean fullscreen = false;
+	public boolean vsync = false;
 }
