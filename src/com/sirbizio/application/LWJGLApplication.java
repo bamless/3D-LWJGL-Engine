@@ -17,8 +17,6 @@ public class LWJGLApplication implements Application {
 	private InputProcessor inputProcessor;
 	private boolean hasFocus;
 	
-	private int lastMouseButton;
-	
 	public static void create(ApplicationListener listener, LWJGLConfiguration configuration) {
 		if(app != null) throw new RuntimeException("An application already exists. Only one application can be created at any time!");
 		config = configuration;
@@ -71,20 +69,18 @@ public class LWJGLApplication implements Application {
 	}
 	
 	private void checkForInputs() {
-		if(!Keyboard.isRepeatEvent())
-			inputProcessor.keyJustPressed(Keyboard.getEventKey());
-		else
-			inputProcessor.keyPressed(Keyboard.getEventKey());
+		while(Keyboard.next()) {
+			if(Keyboard.getEventKeyState())
+				inputProcessor.keyPressed(Keyboard.getEventKey());
+			else
+				inputProcessor.keyReleased(Keyboard.getEventKey());
+		}
 		
-		final int mouseButton = Mouse.getEventButton();
-		if(mouseButton == lastMouseButton) {
-			lastMouseButton = mouseButton;
-			inputProcessor.mouseClick(mouseButton);
-		} else if(mouseButton != lastMouseButton) {
-			lastMouseButton = mouseButton;
-			inputProcessor.mouseJustClicked(mouseButton);
-		} else if(mouseButton < 0) {
-			lastMouseButton = mouseButton;
+		while(Mouse.next() && Mouse.getEventButton() != -1) {
+			if(Mouse.getEventButtonState())
+				inputProcessor.mouseClicked(Mouse.getEventButton());
+			else
+				inputProcessor.mouseReleased(Mouse.getEventButton());
 		}
 	}
 	
