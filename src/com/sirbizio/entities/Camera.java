@@ -28,6 +28,8 @@ public class Camera {
 		final float vDistance = calculateVDistance();
 		calculateCamPosition(hDistance, vDistance);
 		this.yaw = 180 - (player.getRotY() + angleAroundPlayer);
+		if(position.y < 1)
+			position.y = 1;
 	}
 	
 	private void calculateCamPosition(float hDistance, float vDistance) {
@@ -56,6 +58,8 @@ public class Camera {
 		if(Mouse.isButtonDown(1)) {
 			final float pitchChange = Mouse.getDY() * 0.1f;
 			pitch -= pitchChange;
+			if(pitch < -16)
+				pitch = -16;
 		}
 	}
 	
