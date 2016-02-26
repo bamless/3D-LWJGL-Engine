@@ -6,7 +6,7 @@
 	<classpathentry kind="lib" path="lib/jars/lwjgl_util.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/fabrizio/git/3D-LWJGL-Engine/lib/linux"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="3D-LWJGL-Engine/lib/natives-win"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jars/slick-util.jar"/>

@@ -33,7 +33,7 @@ public class Test implements ApplicationListener {
 	private Player player;
 	private Entity dragon;
 	private List<Entity> entities = new ArrayList<>();
-	private List<Terrain> terrains = new ArrayList<>();
+	private Terrain terrain;
 	private Light sun;
 	
 	private Loader loader;
@@ -65,6 +65,19 @@ public class Test implements ApplicationListener {
 		//creates the camera
 		camera = new Camera(player);
 		
+		//********TERRAINS STUFF**************
+		TerrainTexture bgTexture = new TerrainTexture(loader.loadTexture("grassy"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
+		
+		TerrainTexturePack texturePack = new TerrainTexturePack(bgTexture, rTexture, gTexture, bTexture);
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+		
+		
+		terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
+		
+		
 		//adds trees ferns and grass
 		TexturedModel treeModel = new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("lowPolyTree")), 
 				new ModelTexture(loader.loadTexture("lowPolyTree")));
@@ -78,31 +91,20 @@ public class Test implements ApplicationListener {
 		
 		for(int i = 0 ; i < 100 ; i++) {
 			Entity tree = new Entity(treeModel, rand.nextInt(1600), 0, -rand.nextInt(800));
+			tree.getPosition().y = terrain.getHeightOfTerrain(tree.getPosition().x, tree.getPosition().z);
 			entities.add(tree);
 		}
 		for(int i = 0 ; i < 250 ; i++) {
 			Entity fern = new Entity(fernModel, rand.nextInt(1600), 0, -rand.nextInt(800));
+			fern.getPosition().y = terrain.getHeightOfTerrain(fern.getPosition().x, fern.getPosition().z);
 			entities.add(fern);
 		}
 		for(int i = 0 ; i < 3500 ; i++) {
 			Entity grass = new Entity(grassModel, rand.nextInt(1600), 0, -rand.nextInt(800));
+			grass.getPosition().y = terrain.getHeightOfTerrain(grass.getPosition().x, grass.getPosition().z);
 			entities.add(grass);
 		}
-		
-		//********TERRAINS STUFF**************
-		TerrainTexture bgTexture = new TerrainTexture(loader.loadTexture("grassy"));
-		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
-		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
-		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
-		
-		TerrainTexturePack texturePack = new TerrainTexturePack(bgTexture, rTexture, gTexture, bTexture);
-		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
-		
-		
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
-		Terrain terrain2 = new Terrain(1, -1, loader, texturePack, blendMap, "heightmap");
-		terrains.add(terrain);
-		terrains.add(terrain2);
+		dragon.getPosition().y = terrain.getHeightOfTerrain(dragon.getPosition().x, dragon.getPosition().z);
 		
 		//********LIGHT CAMERA N' STUFF*******
 		sun = new Light(new Vector3f(2000, 20000, 20000), new Vector3f(1, 1, 1));
@@ -111,16 +113,15 @@ public class Test implements ApplicationListener {
 	@Override
 	public void render() {
 		if(isActive) {
-			camera.move();
-			player.move();
+			camera.move(terrain);
+			player.move(terrain);
 			dragon.increaseRotation(0, 2 * DisplayManager.getDelta() * 60, 0);
 		}
 		
 		renderer.processEntity(player);
 		for(Entity e : entities)
 			renderer.processEntity(e);
-		for(Terrain t : terrains)
-			renderer.processTerrain(t);
+		renderer.processTerrain(terrain);
 		
 		renderer.render(sun, camera);
 	}

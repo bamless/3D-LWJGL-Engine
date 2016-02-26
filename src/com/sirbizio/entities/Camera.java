@@ -3,6 +3,8 @@ package com.sirbizio.entities;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.sirbizio.terrains.Terrain;
+
 public class Camera {
 	
 	private float distanceFromPlayer = 50;
@@ -19,7 +21,7 @@ public class Camera {
 		this.player = player;
 	}
 	
-	public void move() {
+	public void move(Terrain terrain) {
 		calculateZoom();
 		calculatePitch();
 		calculateZoom();
@@ -28,8 +30,9 @@ public class Camera {
 		final float vDistance = calculateVDistance();
 		calculateCamPosition(hDistance, vDistance);
 		this.yaw = 180 - (player.getRotY() + angleAroundPlayer);
-		if(position.y < 1)
-			position.y = 1;
+		final float height = terrain.getHeightOfTerrain(position.x, position.z);
+		if(position.y < height)
+			position.y = height + 1;
 	}
 	
 	private void calculateCamPosition(float hDistance, float vDistance) {

@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.sirbizio.models.TexturedModel;
 import com.sirbizio.renderEngine.DisplayManager;
+import com.sirbizio.terrains.Terrain;
 
 public class Player extends Entity {
 
@@ -11,8 +12,6 @@ public class Player extends Entity {
 	private static final float TURN_SPEED = 160;
 	public static final float GRAVITY = -70;
 	private static final float JUMP_POWER = 30;
-	
-	private static final float TERRAIN_HEIGHT = 0;
 	
 	private float currentSpeed;
 	private float currentTurnSpeed;
@@ -24,7 +23,7 @@ public class Player extends Entity {
 		super(model, x, y, z);
 	}
 
-	public void move() {
+	public void move(Terrain terrain) {
 		chkeckInputs();
 		increaseRotation(0, currentTurnSpeed * DisplayManager.getDelta(), 0);
 		final float distance = currentSpeed * DisplayManager.getDelta();
@@ -33,9 +32,10 @@ public class Player extends Entity {
 		increasePosition(dx, 0, dz);
 		upwardSpeed += GRAVITY * DisplayManager.getDelta();
 		increasePosition(0, upwardSpeed * DisplayManager.getDelta(), 0);
-		if(getPosition().y < TERRAIN_HEIGHT) {
+		final float terrainHeight = terrain.getHeightOfTerrain(getPosition().x, getPosition().z);
+		if(getPosition().y < terrainHeight) {
 			upwardSpeed = 0;
-			getPosition().y = TERRAIN_HEIGHT;
+			getPosition().y = terrainHeight;
 			isInAir = false;
 		}
 	}

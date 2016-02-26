@@ -7,18 +7,20 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.sirbizio.models.RawModel;
 import com.sirbizio.renderEngine.Loader;
 import com.sirbizio.textures.TerrainTexture;
 import com.sirbizio.textures.TerrainTexturePack;
+import com.sirbizio.toolbox.Maths;
 import com.sirbizio.toolbox.StreamUtils;
 
 public class Terrain {
 	
 	private static final float SIZE = 800;
-	private final float MAX_HEIGHT = 40;
+	private final float MAX_HEIGHT = 100;
 	//private final float MIN_HEIGHT = -40;
 	private final float MAX_PIXEL_COLOUR = 256 * 256 * 256;	
 	
@@ -27,6 +29,8 @@ public class Terrain {
 	private RawModel model;
 	private TerrainTexturePack texturePack;
 	private TerrainTexture blendMap;
+	
+	private float[][] heights;
 	
 	public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap, String heightMap) {
 		this.texturePack = texturePack;
@@ -52,6 +56,7 @@ public class Terrain {
 		}
 		
 		int vetexCount = image.getHeight();
+		heights = new float[vetexCount][vetexCount];
 		
 		int count = vetexCount * vetexCount;
 		float[] vertices = new float[count * 3];
@@ -62,7 +67,9 @@ public class Terrain {
 		for(int i=0 ; i<vetexCount ; i++){
 			for(int j=0;j<vetexCount;j++){
 				vertices[vertexPointer*3] = (float)j/((float)vetexCount - 1) * SIZE;
-				vertices[vertexPointer*3+1] = getHeight(j, i, image);
+				float height = getHeight(j, i, image);
+				heights[j][i] = height;
+				vertices[vertexPointer*3+1] = height;
 				vertices[vertexPointer*3+2] = (float)i/((float)vetexCount - 1) * SIZE;
 				Vector3f normal = calculateNormal(j, i, image);
 				normals[vertexPointer*3] = normal.x;
@@ -119,6 +126,29 @@ public class Terrain {
 	
 	public TerrainTexture getBlendMap() {
 		return blendMap;
+	}
+	
+	public float getHeightOfTerrain(float worldX, float worldZ) {
+		final float terrainX = worldX - this.x;
+		final float terrainZ = worldZ - this.z;
+		final float gridSquareSize = SIZE / ((float) heights.length - 1);
+		final int gridX = (int) Math.floor(terrainX / gridSquareSize);
+		final int gridZ = (int) Math.floor(terrainZ / gridSquareSize);
+		if(gridX >= heights.length - 1 || gridZ >= heights[0].length - 1 || gridX < 0 || gridZ < 0)
+			return 0;
+		final float xCoord = (terrainX % gridSquareSize) / gridSquareSize;
+		final float zCoord = (terrainZ % gridSquareSize) / gridSquareSize;
+		float height;
+		if (xCoord <= (1-zCoord)) {
+			height = Maths.baryCentric(new Vector3f(0, heights[gridX][gridZ], 0), new Vector3f(1,
+							heights[gridX + 1][gridZ], 0), new Vector3f(0,
+							heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
+		} else {
+			height = Maths.baryCentric(new Vector3f(1, heights[gridX + 1][gridZ], 0), new Vector3f(1,
+							heights[gridX + 1][gridZ + 1], 1), new Vector3f(0,
+							heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
+		}
+		return height;
 	}
 	
 	private float getHeight(int x, int y, BufferedImage image) {
