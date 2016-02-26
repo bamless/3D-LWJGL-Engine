@@ -99,8 +99,8 @@ public class Test implements ApplicationListener {
 		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 		
 		
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
-		Terrain terrain2 = new Terrain(1, -1, loader, texturePack, blendMap);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightmap");
+		Terrain terrain2 = new Terrain(1, -1, loader, texturePack, blendMap, "heightmap");
 		terrains.add(terrain);
 		terrains.add(terrain2);
 		

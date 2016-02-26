@@ -45,6 +45,7 @@ public class LWJGLApplication implements Application {
 	
 	private void mainLoop() {
 		while(!Display.isCloseRequested()) {
+			//checks for the onPause/onResume callbacks
 			if(!Display.isActive() && hasFocus) {
 				hasFocus = false;
 				onPause();
@@ -52,8 +53,14 @@ public class LWJGLApplication implements Application {
 				hasFocus = true;
 				onResume();
 			}
+			
+			//checks for input in the inputprocessor
 			checkForInputs();
+			
+			//renders the listener
 			listener.render();
+			
+			//updates the display
 			DisplayManager.updateDisplay();
 		}
 	}
