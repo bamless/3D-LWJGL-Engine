@@ -16,11 +16,13 @@ public class LWJGLApplication implements Application {
 	private ApplicationListener listener;
 	private InputProcessor inputProcessor;
 	private boolean hasFocus;
+	private boolean exit;
 	
 	public static void create(ApplicationListener listener, LWJGLConfiguration configuration) {
 		if(app != null) throw new RuntimeException("An application already exists. Only one application can be created at any time!");
 		config = configuration;
 		app = new LWJGLApplication(listener);
+		app.start();
 	}
 	
 	public static LWJGLApplication getInstance() {
@@ -31,10 +33,12 @@ public class LWJGLApplication implements Application {
 	private LWJGLApplication(ApplicationListener listener) {
 		this.listener = listener;
 		this.inputProcessor = new InputAdapter();
-		
-		onCreate();
-		mainLoop();
-		cleanUp();
+	}
+	
+	private void start() {
+		app.onCreate();
+		app.mainLoop();
+		app.cleanUp();
 	}
 	
 	@Override
@@ -45,6 +49,8 @@ public class LWJGLApplication implements Application {
 	
 	private void mainLoop() {
 		while(!Display.isCloseRequested()) {
+			if(exit) break;
+			
 			//checks for the onPause/onResume callbacks
 			if(!Display.isActive() && hasFocus) {
 				hasFocus = false;
@@ -96,6 +102,10 @@ public class LWJGLApplication implements Application {
 		listener.onPause();
 		listener.cleanUp();
 		DisplayManager.closeDisplay();
+	}
+	
+	public static void exit() {
+		app.exit = true;
 	}
 	
 	public void setInputProcessor(InputProcessor processor) {
