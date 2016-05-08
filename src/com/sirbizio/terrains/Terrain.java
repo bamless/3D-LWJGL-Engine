@@ -14,8 +14,8 @@ import com.sirbizio.models.RawModel;
 import com.sirbizio.renderEngine.Loader;
 import com.sirbizio.textures.TerrainTexture;
 import com.sirbizio.textures.TerrainTexturePack;
-import com.sirbizio.toolbox.Maths;
-import com.sirbizio.toolbox.StreamUtils;
+import com.sirbizio.utils.Maths;
+import com.sirbizio.utils.StreamUtils;
 
 public class Terrain {
 	

@@ -14,7 +14,7 @@ import com.sirbizio.models.RawModel;
 import com.sirbizio.models.TexturedModel;
 import com.sirbizio.shaders.StaticShader;
 import com.sirbizio.textures.ModelTexture;
-import com.sirbizio.toolbox.Maths;
+import com.sirbizio.utils.Maths;
 
 /**
  * Class that renders models

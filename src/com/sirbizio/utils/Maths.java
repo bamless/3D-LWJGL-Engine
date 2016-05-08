@@ -1,4 +1,4 @@
-package com.sirbizio.toolbox;
+package com.sirbizio.utils;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;

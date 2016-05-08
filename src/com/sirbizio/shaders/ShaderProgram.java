@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.sirbizio.toolbox.StreamUtils;
+import com.sirbizio.utils.StreamUtils;
 
 public abstract class ShaderProgram {
 

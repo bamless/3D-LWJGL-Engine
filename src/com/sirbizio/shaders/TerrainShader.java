@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Light;
-import com.sirbizio.toolbox.Maths;
+import com.sirbizio.utils.Maths;
 
 public class TerrainShader extends ShaderProgram{
 

@@ -13,7 +13,7 @@ import com.sirbizio.models.RawModel;
 import com.sirbizio.shaders.TerrainShader;
 import com.sirbizio.terrains.Terrain;
 import com.sirbizio.textures.TerrainTexturePack;
-import com.sirbizio.toolbox.Maths;
+import com.sirbizio.utils.Maths;
 
 public class TerrainRenderer {
 	

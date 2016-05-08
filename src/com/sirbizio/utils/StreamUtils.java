@@ -1,4 +1,4 @@
-package com.sirbizio.toolbox;
+package com.sirbizio.utils;
 
 import java.io.Closeable;
 import java.io.IOException;

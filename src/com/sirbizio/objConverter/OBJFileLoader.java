@@ -11,7 +11,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.sirbizio.toolbox.StreamUtils;
+import com.sirbizio.utils.StreamUtils;
 
 public class OBJFileLoader {
 	
