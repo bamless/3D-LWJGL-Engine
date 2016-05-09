@@ -1,5 +1,10 @@
 package com.sirbizio.textures;
 
+/**
+ * Models a terrain texture.
+ * @author fabrizio
+ *
+ */
 public class TerrainTexture {
 	
 	private int textureID;

@@ -1,5 +1,10 @@
 package com.sirbizio.textures;
 
+/**
+ * A group of textures used for terrain multi-texturing (using a blendmap)
+ * @author fabrizio
+ *
+ */
 public class TerrainTexturePack {
 
 	private TerrainTexture backgroundTexture;

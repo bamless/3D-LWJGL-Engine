@@ -8,6 +8,7 @@ package com.sirbizio.application;
  */
 public interface Cleanable {
 
+	/**Releases the object's resources*/
 	void cleanUp();
 	
 }

@@ -7,12 +7,17 @@ package com.sirbizio.textures;
  */
 public class ModelTexture {
 	
+	/**The ID of the texture*/
     private int TextureID;
     
+    /**The shine damper texture's attribute*/
     private float shineDamper = 1;
+    /**The reflectivity of the texture*/
     private float reflectivity = 0;
     
+    /**Whether the texture has transparent parts*/
     private boolean hasTransparency = false;
+    /**Whether the texture should use a fake light ignoring the sun*/
     private boolean useFakeLighting = false;
     
     public ModelTexture(int id) {

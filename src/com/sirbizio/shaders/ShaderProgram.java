@@ -13,14 +13,17 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.sirbizio.application.Cleanable;
 import com.sirbizio.utils.StreamUtils;
 
-public abstract class ShaderProgram {
+public abstract class ShaderProgram implements Cleanable {
 
+	/**Shader's IDs*/
 	private int programID;
 	private int vertexShaderID;
 	private int fragmentShaderID;
-
+	
+	/**Buffer used for the loading of matrices*/
 	private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
 
 	public ShaderProgram(String vertexFile, String fragmentFile) {
@@ -34,27 +37,33 @@ public abstract class ShaderProgram {
 		GL20.glValidateProgram(programID);
 		getAllUniformLocations();
 	}
-
+	
+	/**
+	 * Use to get all uniform variable locations.
+	 */
 	protected abstract void getAllUniformLocations();
 
 	/**
 	 * Gets the uniform variable
 	 * 
 	 * @param uniformNam the name
-	 * @return
+	 * @return the uniform variable ID
 	 */
 	protected int getUniformLocation(String uniformName) {
 		return GL20.glGetUniformLocation(programID, uniformName);
 	}
 
+	/**Enables the shader for rendering*/
 	public void start() {
 		GL20.glUseProgram(programID);
 	}
 
+	/**Disables the shader*/
 	public void stop() {
 		GL20.glUseProgram(0);
 	}
 
+	@Override
 	public void cleanUp() {
 		stop();
 		GL20.glDetachShader(programID, vertexShaderID);
@@ -64,12 +73,19 @@ public abstract class ShaderProgram {
 		GL20.glDeleteProgram(programID);
 	}
 
+	/**Binds all the VAO attributes*/
 	protected abstract void bindAttributes();
 
+	/**
+	 * Binds a VAO attribute
+	 * @param attribute the number of the attribute that will be enalble
+	 * @param variableName the name of the attribute
+	 */
 	protected void bindAttribute(int attribute, String variableName) {
 		GL20.glBindAttribLocation(programID, attribute, variableName);
 	}
 
+	/**Loads an int in a uniform*/
 	protected void loadInt(int location, int value) {
 		GL20.glUniform1i(location, value);
 	}

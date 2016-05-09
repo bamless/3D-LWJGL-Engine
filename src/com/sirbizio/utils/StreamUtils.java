@@ -3,6 +3,11 @@ package com.sirbizio.utils;
 import java.io.Closeable;
 import java.io.IOException;
 
+/**
+ * Stream utils
+ * @author fabrizio
+ *
+ */
 public final class StreamUtils {
 
 	private StreamUtils(){}
