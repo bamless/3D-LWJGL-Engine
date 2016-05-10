@@ -30,6 +30,7 @@ public class DisplayManager {
 	                   displayMode = modes[i];
 	            }
 	        }
+			if(displayMode == null) displayMode = new DisplayMode(config.width, config.height);
 			Display.setDisplayMode(displayMode);
 			Display.setFullscreen(config.fullscreen);
 			Display.setVSyncEnabled(config.vsync);
