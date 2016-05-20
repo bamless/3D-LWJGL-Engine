@@ -46,7 +46,7 @@ public abstract class ShaderProgram implements Cleanable {
 	/**
 	 * Gets the uniform variable
 	 * 
-	 * @param uniformNam the name
+	 * @param uniformName the name
 	 * @return the uniform variable ID
 	 */
 	protected int getUniformLocation(String uniformName) {
