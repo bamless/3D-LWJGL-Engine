@@ -1,5 +1,9 @@
 package com.sirbizio.shaders;
 
+import com.sirbizio.entities.Camera;
+import com.sirbizio.entities.Entity;
+import com.sirbizio.entities.Player;
+
 /**
  * Shader for rendering realistic water.
  * W.I.P
@@ -19,7 +23,7 @@ public class WaterShader extends ShaderProgram {
 	protected void getAllUniformLocations() {
 		//Add water shine uniform
 		//Add water displacement factor uniform
-		//Add water fernel effect uniform
+		//Add water fersnel effect uniform
 	}
 
 	@Override

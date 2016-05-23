@@ -34,7 +34,7 @@
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://3D-LWJGL-Engine/lib/linux" />
+          <root url="file://$MODULE_DIR$/lib/linux" />
         </NATIVE>
         <SOURCES />
       </library>
@@ -49,6 +49,5 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="lwjgl" level="project" />
-    <orderEntry type="library" name="linux" level="project" />
   </component>
 </module>
