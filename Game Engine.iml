@@ -17,7 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/res" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="module-library">
       <library name="lwjgl_util.jar">
         <CLASSES>
@@ -34,7 +34,7 @@
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/lib/linux" />
+          <root url="file://3D-LWJGL-Engine/lib/linux" />
         </NATIVE>
         <SOURCES />
       </library>
