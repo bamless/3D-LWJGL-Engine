@@ -129,8 +129,8 @@ public class ShadowMapMasterRenderer {
 	 * @param lightDirection
 	 *            - the direction of the light rays coming from the sun.
 	 * @param box
-	 *            - the shadow box, which contains all the info about the
-	 *            "view cuboid".
+	 *            - the shadow box, which contains all the info about the "view
+	 *            cuboid".
 	 */
 	private void prepare(Vector3f lightDirection, ShadowBox box) {
 		updateOrthoProjectionMatrix(box.getWidth(), box.getHeight(), box.getLength());
@@ -174,8 +174,7 @@ public class ShadowMapMasterRenderer {
 		Matrix4f.rotate(pitch, new Vector3f(1, 0, 0), lightViewMatrix, lightViewMatrix);
 		float yaw = (float) Math.toDegrees(((float) Math.atan(direction.x / direction.z)));
 		yaw = direction.z > 0 ? yaw - 180 : yaw;
-		Matrix4f.rotate((float) -Math.toRadians(yaw), new Vector3f(0, 1, 0), lightViewMatrix,
-				lightViewMatrix);
+		Matrix4f.rotate((float) -Math.toRadians(yaw), new Vector3f(0, 1, 0), lightViewMatrix, lightViewMatrix);
 		Matrix4f.translate(center, lightViewMatrix, lightViewMatrix);
 	}
 
@@ -204,7 +203,8 @@ public class ShadowMapMasterRenderer {
 	 * conversion is necessary to convert from one coordinate system to the
 	 * coordinate system that we can use to sample to shadow map.
 	 * 
-	 * @return The offset as a matrix (so that it's easy to apply to other matrices).
+	 * @return The offset as a matrix (so that it's easy to apply to other
+	 *         matrices).
 	 */
 	private static Matrix4f createOffset() {
 		Matrix4f offset = new Matrix4f();

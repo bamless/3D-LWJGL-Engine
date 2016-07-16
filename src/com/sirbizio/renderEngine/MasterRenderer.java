@@ -20,7 +20,7 @@ import com.sirbizio.terrains.Terrain;
 
 public class MasterRenderer implements Cleanable {
 	
-	public static final float FOV = 70;
+	public static final float FOV = 50;
 	public static final float NEAR_PLANE = 0.1f;
 	public static final float FAR_PLANE = 1000;
 
