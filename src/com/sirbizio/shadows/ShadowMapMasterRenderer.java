@@ -1,4 +1,4 @@
-package shadows;
+package com.sirbizio.shadows;
 
 import java.util.List;
 import java.util.Map;
@@ -8,18 +8,16 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import entities.Camera;
-import entities.Entity;
-import entities.Light;
-import models.TexturedModel;
+import com.sirbizio.entities.Camera;
+import com.sirbizio.entities.Entity;
+import com.sirbizio.entities.Light;
+import com.sirbizio.models.TexturedModel;
 
 /**
  * This class is in charge of using all of the classes in the shadows package to
  * carry out the shadow render pass, i.e. rendering the scene to the shadow map
  * texture. This is the only class in the shadows package which needs to be
  * referenced from outside the shadows package.
- * 
- * @author Karl
  *
  */
 public class ShadowMapMasterRenderer {

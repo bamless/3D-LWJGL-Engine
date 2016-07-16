@@ -1,13 +1,13 @@
-package shadows;
+package com.sirbizio.shadows;
 
 import org.lwjgl.util.vector.Matrix4f;
 
-import shaders.ShaderProgram;
+import com.sirbizio.shaders.ShaderProgram;
 
 public class ShadowShader extends ShaderProgram {
 	
-	private static final String VERTEX_FILE = "src/shadows/shadowVertexShader.txt";
-	private static final String FRAGMENT_FILE = "src/shadows/shadowFragmentShader.txt";
+	private static final String VERTEX_FILE = "/resources/shaders/shadowVertexShader.vert";
+	private static final String FRAGMENT_FILE = "/resources/shaders/shadowFragmentShader.frag";
 	
 	private int location_mvpMatrix;
 

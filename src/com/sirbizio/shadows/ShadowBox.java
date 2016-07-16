@@ -17,8 +17,6 @@ import com.sirbizio.renderEngine.MasterRenderer;
  * Everything inside the cuboidal area represented by this object will be
  * rendered to the shadow map in the shadow render pass. Everything outside the
  * area won't be.
- * 
- * @author Karl
  *
  */
 public class ShadowBox {
@@ -46,8 +44,7 @@ public class ShadowBox {
 	 *            transform a point from world space into "light" space (i.e.
 	 *            changes a point's coordinates from being in relation to the
 	 *            world's axis to being in terms of the light's local axis).
-	 * @param camera
-	 *            - the in-game camera.
+	 * @param camera - the in-game camera.
 	 */
 	protected ShadowBox(Matrix4f lightViewMatrix, Camera camera) {
 		this.lightViewMatrix = lightViewMatrix;
@@ -72,8 +69,7 @@ public class ShadowBox {
 		Vector3f centerNear = Vector3f.add(toNear, cam.getPosition(), null);
 		Vector3f centerFar = Vector3f.add(toFar, cam.getPosition(), null);
 
-		Vector4f[] points = calculateFrustumVertices(rotation, forwardVector, centerNear,
-				centerFar);
+		Vector4f[] points = calculateFrustumVertices(rotation, forwardVector, centerNear, centerFar);
 
 		boolean first = true;
 		for (Vector4f point : points) {
@@ -160,20 +156,20 @@ public class ShadowBox {
 	 *            plane.
 	 * @return The positions of the vertices of the frustum in light space.
 	 */
-	private Vector4f[] calculateFrustumVertices(Matrix4f rotation, Vector3f forwardVector,
-			Vector3f centerNear, Vector3f centerFar) {
+	private Vector4f[] calculateFrustumVertices(Matrix4f rotation, Vector3f forwardVector, Vector3f centerNear,
+			Vector3f centerFar) {
 		Vector3f upVector = new Vector3f(Matrix4f.transform(rotation, UP, null));
 		Vector3f rightVector = Vector3f.cross(forwardVector, upVector, null);
 		Vector3f downVector = new Vector3f(-upVector.x, -upVector.y, -upVector.z);
 		Vector3f leftVector = new Vector3f(-rightVector.x, -rightVector.y, -rightVector.z);
-		Vector3f farTop = Vector3f.add(centerFar, new Vector3f(upVector.x * farHeight,
-				upVector.y * farHeight, upVector.z * farHeight), null);
-		Vector3f farBottom = Vector3f.add(centerFar, new Vector3f(downVector.x * farHeight,
-				downVector.y * farHeight, downVector.z * farHeight), null);
-		Vector3f nearTop = Vector3f.add(centerNear, new Vector3f(upVector.x * nearHeight,
-				upVector.y * nearHeight, upVector.z * nearHeight), null);
-		Vector3f nearBottom = Vector3f.add(centerNear, new Vector3f(downVector.x * nearHeight,
-				downVector.y * nearHeight, downVector.z * nearHeight), null);
+		Vector3f farTop = Vector3f.add(centerFar,
+				new Vector3f(upVector.x * farHeight, upVector.y * farHeight, upVector.z * farHeight), null);
+		Vector3f farBottom = Vector3f.add(centerFar,
+				new Vector3f(downVector.x * farHeight, downVector.y * farHeight, downVector.z * farHeight), null);
+		Vector3f nearTop = Vector3f.add(centerNear,
+				new Vector3f(upVector.x * nearHeight, upVector.y * nearHeight, upVector.z * nearHeight), null);
+		Vector3f nearBottom = Vector3f.add(centerNear,
+				new Vector3f(downVector.x * nearHeight, downVector.y * nearHeight, downVector.z * nearHeight), null);
 		Vector4f[] points = new Vector4f[8];
 		points[0] = calculateLightSpaceFrustumCorner(farTop, rightVector, farWidth);
 		points[1] = calculateLightSpaceFrustumCorner(farTop, leftVector, farWidth);
@@ -198,8 +194,7 @@ public class ShadowBox {
 	 *            - the distance of the corner from the start point.
 	 * @return - The relevant corner vertex of the view frustum in light space.
 	 */
-	private Vector4f calculateLightSpaceFrustumCorner(Vector3f startPoint, Vector3f direction,
-			float width) {
+	private Vector4f calculateLightSpaceFrustumCorner(Vector3f startPoint, Vector3f direction, float width) {
 		Vector3f point = Vector3f.add(startPoint,
 				new Vector3f(direction.x * width, direction.y * width, direction.z * width), null);
 		Vector4f point4f = new Vector4f(point.x, point.y, point.z, 1f);
@@ -226,8 +221,7 @@ public class ShadowBox {
 	 */
 	private void calculateWidthsAndHeights() {
 		farWidth = (float) (SHADOW_DISTANCE * Math.tan(Math.toRadians(MasterRenderer.FOV)));
-		nearWidth = (float) (MasterRenderer.NEAR_PLANE
-				* Math.tan(Math.toRadians(MasterRenderer.FOV)));
+		nearWidth = (float) (MasterRenderer.NEAR_PLANE * Math.tan(Math.toRadians(MasterRenderer.FOV)));
 		farHeight = farWidth / getAspectRatio();
 		nearHeight = nearWidth / getAspectRatio();
 	}
