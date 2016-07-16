@@ -107,7 +107,7 @@ public class Test implements ApplicationListener {
 		dragon.getPosition().y = terrain.getHeightOfTerrain(dragon.getPosition().x, dragon.getPosition().z);
 		
 		//********LIGHT CAMERA N' STUFF*******
-		sun = new Light(new Vector3f(2000, 20000, 20000), new Vector3f(1, 1, 1));
+		sun = new Light(new Vector3f(1000000, 1000000, 1000000), new Vector3f(1.3f, 1.3f, 1.3f));
 	}
 
 	@Override
@@ -116,14 +116,15 @@ public class Test implements ApplicationListener {
 			camera.move(terrain);
 			player.move(terrain);
 			dragon.increaseRotation(0, 2 * DisplayManager.getDelta() * 60, 0);
+
+
+			renderer.processEntity(player);
+			for (Entity e : entities)
+				renderer.processEntity(e);
+			renderer.processTerrain(terrain);
+
+			renderer.render(sun, camera);
 		}
-		
-		renderer.processEntity(player);
-		for(Entity e : entities)
-			renderer.processEntity(e);
-		renderer.processTerrain(terrain);
-		
-		renderer.render(sun, camera);
 	}
 
 	@Override
