@@ -6,6 +6,7 @@
 	<classpathentry kind="lib" path="lib/jars/lwjgl_util.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="file:/home/fabrizio/HDD/Fabrizio/WorkSpace/3D-LWJGL-Engine/lib/javadoclwjgl/javadoc/"/>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="3D-LWJGL-Engine/lib/linux"/>
 		</attributes>
 	</classpathentry>

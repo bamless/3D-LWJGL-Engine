@@ -20,7 +20,7 @@ import com.sirbizio.utils.StreamUtils;
 public class Terrain {
 	
 	private static final float SIZE = 800;
-	private final float MAX_HEIGHT = 100;
+	private final float MAX_HEIGHT = 80;
 	//private final float MIN_HEIGHT = -40;
 	private final float MAX_PIXEL_COLOUR = 256 * 256 * 256;	
 	

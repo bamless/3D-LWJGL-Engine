@@ -16,14 +16,16 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform vec3 lightPosition;
 uniform mat4 toShadowMapSpace;
+uniform float shadowDistance;
 
 const float density = 0.0015;
 const float gradient = 5.0;
+const float transitionDistance = 10.0;
 
 void main(void) {
 	vec4 worldPosition = transformationMatrix * vec4(position,1.0);
 	
-	shadowCoords = worldPosition * toShadowMapSpace;
+	shadowCoords = toShadowMapSpace * worldPosition;
 	
 	vec4 positionRelativeToCam = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCam;
@@ -35,5 +37,9 @@ void main(void) {
 	float distance = length(positionRelativeToCam.xyz);
 	visibility = exp(-pow((distance * density), gradient));
 	visibility = clamp(visibility, 0.0, 1.0);
+
+	distance = distance - (shadowDistance - transitionDistance);
+	distance = distance / transitionDistance;
+	shadowCoords.w = clamp(1.0 - distance, 0.0, 1.0);
 
 }

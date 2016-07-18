@@ -23,7 +23,7 @@ import com.sirbizio.models.TexturedModel;
  */
 public class ShadowMapMasterRenderer implements Cleanable {
 
-	private static final int SHADOW_MAP_SIZE = 2048;
+	private static final int SHADOW_MAP_SIZE = 8192;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
@@ -214,4 +214,13 @@ public class ShadowMapMasterRenderer implements Cleanable {
 		offset.scale(new Vector3f(0.5f, 0.5f, 0.5f));
 		return offset;
 	}
+	
+	public float getShadowDistance() {
+		return ShadowBox.SHADOW_DISTANCE;
+	}
+	
+	public int getShadowMapRes() {
+		return SHADOW_MAP_SIZE;
+	}
+	
 }

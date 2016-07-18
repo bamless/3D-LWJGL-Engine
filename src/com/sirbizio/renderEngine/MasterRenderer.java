@@ -76,6 +76,7 @@ public class MasterRenderer implements Cleanable {
 		terrainShader.loadSkyColour(RED, GREEN, BLUE);
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
+		terrainShader.loadToShadowDistance(shadowMapRenderer.getShadowDistance());
 		terrainRenderer.render(terrains, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		terrainShader.stop();
 		

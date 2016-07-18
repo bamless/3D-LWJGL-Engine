@@ -14,7 +14,7 @@ uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
 uniform sampler2D blendMap;
-uniform sampler2D shadowMap;
+uniform sampler2DShadow shadowMap;
 
 uniform vec3 lightColour;
 uniform float shineDamper;
@@ -23,11 +23,11 @@ uniform vec3 skyColour;
 
 void main(void) {
 
-	float objectNearestLight = texture(shadowMap, shadowCoords.xy).r;
+	float inShadow = 1.0 - texture(shadowMap, shadowCoords.xyz);
 	float lightFactor = 1.0;
 	
-	if(shadowCoords.z > objectNearestLight) {
-		lightFactor = 1.0 - 0.4; 
+	if(inShadow != 0.0) {
+		lightFactor = 1.0 - (shadowCoords.w * 0.65 * inShadow); 
 	}
 
 	vec4 blendMapColour = texture(blendMap, pass_textureCoords);
@@ -44,9 +44,8 @@ void main(void) {
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitLightVector = normalize(toLightVector);
 	
-	float nDotl = dot(unitNormal, unitLightVector);
-	float brightness = max(nDotl, 0.1386);
-	vec3 diffuse = brightness * lightColour * lightFactor;
+	float brightness = dot(unitNormal, unitLightVector);
+	vec3 diffuse = max(brightness * lightColour * lightFactor, 0.2);
 
 	vec3 unitToCameraVector = normalize(toCameraVector);
 	vec3 lightDirection = -unitLightVector;

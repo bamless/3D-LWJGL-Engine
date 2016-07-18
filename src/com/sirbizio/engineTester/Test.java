@@ -50,6 +50,7 @@ public class Test implements ApplicationListener {
 		
 		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("person")), 
 				new ModelTexture(loader.loadTexture("playerTexture"))), 0, 0, 0);
+		entities.add(player);
 		//creates the camera
 		camera = new Camera(player);
 		
@@ -120,7 +121,6 @@ public class Test implements ApplicationListener {
 
 			renderer.renderShadowMap(entities, sun);
 
-			renderer.processEntity(player);
 			for (Entity e : entities)
 				renderer.processEntity(e);
 			renderer.processTerrain(terrain);
