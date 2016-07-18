@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.sirbizio.application.Cleanable;
 import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Entity;
 import com.sirbizio.entities.Light;
@@ -20,7 +21,7 @@ import com.sirbizio.models.TexturedModel;
  * referenced from outside the shadows package.
  *
  */
-public class ShadowMapMasterRenderer {
+public class ShadowMapMasterRenderer implements Cleanable {
 
 	private static final int SHADOW_MAP_SIZE = 2048;
 
@@ -91,6 +92,7 @@ public class ShadowMapMasterRenderer {
 	/**
 	 * Clean up the shader and FBO on closing.
 	 */
+	@Override
 	public void cleanUp() {
 		shader.cleanUp();
 		shadowFbo.cleanUp();

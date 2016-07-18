@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Matrix4f;
 
 import com.sirbizio.application.Cleanable;
@@ -16,6 +17,7 @@ import com.sirbizio.entities.Light;
 import com.sirbizio.models.TexturedModel;
 import com.sirbizio.shaders.StaticShader;
 import com.sirbizio.shaders.TerrainShader;
+import com.sirbizio.shadows.ShadowMapMasterRenderer;
 import com.sirbizio.terrains.Terrain;
 
 public class MasterRenderer implements Cleanable {
@@ -39,12 +41,15 @@ public class MasterRenderer implements Cleanable {
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<>();
 	private List<Terrain> terrains = new ArrayList<>();
 	
-	public MasterRenderer() {
+	private ShadowMapMasterRenderer shadowMapRenderer;
+	
+	public MasterRenderer(Camera camera) {
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
+		shadowMapRenderer = new ShadowMapMasterRenderer(camera);
 	}
 	
 	public static void enableCulling() {
@@ -71,7 +76,7 @@ public class MasterRenderer implements Cleanable {
 		terrainShader.loadSkyColour(RED, GREEN, BLUE);
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
-		terrainRenderer.render(terrains);
+		terrainRenderer.render(terrains, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		terrainShader.stop();
 		
 		terrains.clear();
@@ -101,6 +106,8 @@ public class MasterRenderer implements Cleanable {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);// enables the depth test
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);// clears the buffers
 		GL11.glClearColor(RED, GREEN, BLUE, 1);// clears the screen
+		GL13.glActiveTexture(GL13.GL_TEXTURE5);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, getShadowMapTexture());
 	}
 
 	private void createProjectionMatrix(){
@@ -118,10 +125,22 @@ public class MasterRenderer implements Cleanable {
 		projectionMatrix.m33 = 0;
 	}
 	
+	public void renderShadowMap(List<Entity> entitiesList, Light sun) {
+		for(Entity e : entitiesList)
+			processEntity(e);
+		shadowMapRenderer.render(entities, sun);
+		entities.clear();
+	}
+	
+	public int getShadowMapTexture() {
+		return shadowMapRenderer.getShadowMap();
+	}
+	
 	@Override
 	public void cleanUp() {
 		shader.cleanUp();
 		terrainShader.cleanUp();
+		shadowMapRenderer.cleanUp();
 	}
 	
 }

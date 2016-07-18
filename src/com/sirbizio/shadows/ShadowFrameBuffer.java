@@ -9,13 +9,15 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 
+import com.sirbizio.application.Cleanable;
+
 /**
  * The frame buffer for the shadow pass. This class sets up the depth texture
  * which can be rendered to during the shadow render pass, producing a shadow
  * map.
  *
  */
-public class ShadowFrameBuffer {
+public class ShadowFrameBuffer implements Cleanable {
 
 	private final int WIDTH;
 	private final int HEIGHT;
@@ -39,7 +41,8 @@ public class ShadowFrameBuffer {
 	/**
 	 * Deletes the frame buffer and shadow map texture when the game closes.
 	 */
-	protected void cleanUp() {
+	@Override
+	public void cleanUp() {
 		GL30.glDeleteFramebuffers(fbo);
 		GL11.glDeleteTextures(shadowMap);
 	}

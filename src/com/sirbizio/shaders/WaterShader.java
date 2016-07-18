@@ -1,9 +1,5 @@
 package com.sirbizio.shaders;
 
-import com.sirbizio.entities.Camera;
-import com.sirbizio.entities.Entity;
-import com.sirbizio.entities.Player;
-
 /**
  * Shader for rendering realistic water.
  * W.I.P

@@ -47,7 +47,13 @@ public class Test implements ApplicationListener {
 	public void onCreate() {
 		//creates loader, renderer and camera
 		loader = new Loader();
-		renderer = new MasterRenderer();
+		
+		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("person")), 
+				new ModelTexture(loader.loadTexture("playerTexture"))), 0, 0, 0);
+		//creates the camera
+		camera = new Camera(player);
+		
+		renderer = new MasterRenderer(camera);
 		
 		//********ENTITIES********************
 		ModelData modelData = OBJFileLoader.loadOBJ("dragon");
@@ -59,11 +65,6 @@ public class Test implements ApplicationListener {
 		Entity dragon = new Entity(texturedmodel, new Vector3f(150, 0, -150), 0, 0, 0, 2);
 		entities.add(dragon);
 		this.dragon = dragon;
-		
-		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("person")), 
-				new ModelTexture(loader.loadTexture("playerTexture"))), 0, 0, 0);
-		//creates the camera
-		camera = new Camera(player);
 		
 		//********TERRAINS STUFF**************
 		TerrainTexture bgTexture = new TerrainTexture(loader.loadTexture("grassy"));
@@ -117,6 +118,7 @@ public class Test implements ApplicationListener {
 			player.move(terrain);
 			dragon.increaseRotation(0, 2 * DisplayManager.getDelta() * 60, 0);
 
+			renderer.renderShadowMap(entities, sun);
 
 			renderer.processEntity(player);
 			for (Entity e : entities)

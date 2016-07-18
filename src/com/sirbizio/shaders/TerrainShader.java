@@ -25,6 +25,8 @@ public class TerrainShader extends ShaderProgram{
 	private int locationGTexture;
 	private int locationBTexture;
 	private int locationBlendMap;
+	private int locationToShadowMapSpace;
+	private int locationShadowMap;
 
 	public TerrainShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -52,6 +54,8 @@ public class TerrainShader extends ShaderProgram{
 		locationGTexture = getUniformLocation("gTexture");
 		locationBTexture = getUniformLocation("bTexture");
 		locationBlendMap = getUniformLocation("blendMap");
+		locationToShadowMapSpace = getUniformLocation("toShadowMapSpace");
+		locationShadowMap = getUniformLocation("shadowMap");
 	}
 	
 	public void connectTextureUnits() {
@@ -60,6 +64,7 @@ public class TerrainShader extends ShaderProgram{
 		loadInt(locationGTexture, 2);
 		loadInt(locationBTexture, 3);
 		loadInt(locationBlendMap, 4);
+		loadInt(locationShadowMap, 5);
 	}
 	
 	public void loadSkyColour(float r, float g, float b) {
@@ -87,6 +92,10 @@ public class TerrainShader extends ShaderProgram{
 
 	public void loadProjectionMatrix(Matrix4f matrix) {
 		loadMatrix(locationProjectionMatrix, matrix);
+	}
+	
+	public void loadToShadowSpaceMatrix(Matrix4f mat) {
+		loadMatrix(locationToShadowMapSpace, mat);
 	}
 	
 }
