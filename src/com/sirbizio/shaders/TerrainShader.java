@@ -28,6 +28,7 @@ public class TerrainShader extends ShaderProgram{
 	private int locationToShadowMapSpace;
 	private int locationShadowMap;
 	private int locationShadowDistance;
+	private int locationMapSize;
 
 	public TerrainShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -58,6 +59,7 @@ public class TerrainShader extends ShaderProgram{
 		locationToShadowMapSpace = getUniformLocation("toShadowMapSpace");
 		locationShadowMap = getUniformLocation("shadowMap");
 		locationShadowDistance = getUniformLocation("shadowDistance");
+		locationMapSize = getUniformLocation("mapSize");
 	}
 	
 	public void connectTextureUnits() {
@@ -102,6 +104,10 @@ public class TerrainShader extends ShaderProgram{
 	
 	public void loadToShadowDistance(float distance) {
 		loadFloat(locationShadowDistance, distance);
+	}
+	
+	public void loadMapSize(int size) {
+		loadFloat(locationMapSize, (float) size);
 	}
 	
 }

@@ -23,7 +23,7 @@ import com.sirbizio.models.TexturedModel;
  */
 public class ShadowMapMasterRenderer implements Cleanable {
 
-	private static final int SHADOW_MAP_SIZE = 8192;
+	private static final int SHADOW_MAP_SIZE = 1024;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
