@@ -14,7 +14,7 @@ uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
 uniform sampler2D blendMap;
-uniform sampler2D shadowMap;
+uniform sampler2DShadow shadowMap;
 
 uniform vec3 lightColour;
 uniform float shineDamper;
@@ -22,7 +22,7 @@ uniform float reflectivity;
 uniform vec3 skyColour;
 uniform float mapSize;
 
-const int pcfCount = 4;
+const int pcfCount = 2;
 const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
 void main(void) {
@@ -32,19 +32,18 @@ void main(void) {
 	
 	for(int x=-pcfCount ; x<=pcfCount; x++) {
 		for(int y=-pcfCount ; y<=pcfCount; y++) {
-			float objectNearestLight = texture(shadowMap, shadowCoords.xy + vec2(x, y) * texelSize).r;
-			if(shadowCoords.z > objectNearestLight) {
-				total += 1.0;
-			}
+			float objectNearestLight = 1.0 - texture(shadowMap, shadowCoords.xyz + vec3(x, y, 0.0) * texelSize);
+			total += objectNearestLight;
 		}
 	}
 	
 	total /= totalTexels;
 	
 	float lightFactor = 1.0 - (total * shadowCoords.w);
-
+	
+	/*
 	//hardware PCF currently disabled
-	/*float inShadow = 1.0 - texture(shadowMap, shadowCoords.xyz);
+	float inShadow = 1.0 - texture(shadowMap, shadowCoords.xyz);
 	float lightFactor = 1.0;
 	
 	if(inShadow != 0.0) {

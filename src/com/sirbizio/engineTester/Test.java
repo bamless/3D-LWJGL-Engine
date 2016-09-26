@@ -109,7 +109,7 @@ public class Test implements ApplicationListener {
 		dragon.getPosition().y = terrain.getHeightOfTerrain(dragon.getPosition().x, dragon.getPosition().z);
 		
 		//********LIGHT CAMERA N' STUFF*******
-		sun = new Light(new Vector3f(1000000, 1000000, 1000000), new Vector3f(1.3f, 1.3f, 1.3f));
+		sun = new Light(new Vector3f(-1000000, 1000000, -1000000), new Vector3f(1.3f, 1.3f, 1.3f));
 	}
 
 	@Override
