@@ -40,15 +40,6 @@ void main(void) {
 	total /= totalTexels;
 	
 	float lightFactor = 1.0 - (total * shadowCoords.w);
-	
-	/*
-	//hardware PCF currently disabled
-	float inShadow = 1.0 - texture(shadowMap, shadowCoords.xyz);
-	float lightFactor = 1.0;
-	
-	if(inShadow != 0.0) {
-		lightFactor = 1.0 - (shadowCoords.w * 0.65 * inShadow); 
-	}*/
 
 	vec4 blendMapColour = texture(blendMap, pass_textureCoords);
 	
@@ -65,6 +56,7 @@ void main(void) {
 	vec3 unitLightVector = normalize(toLightVector);
 	
 	float brightness = dot(unitNormal, unitLightVector);
+	
 	vec3 diffuse = max(brightness * lightColour * lightFactor, 0.2);
 
 	vec3 unitToCameraVector = normalize(toCameraVector);

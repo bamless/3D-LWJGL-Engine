@@ -23,7 +23,7 @@ import com.sirbizio.models.TexturedModel;
  */
 public class ShadowMapMasterRenderer implements Cleanable {
 
-	private static final int SHADOW_MAP_SIZE = 2048;
+	private static final int SHADOW_MAP_SIZE = 4096;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
@@ -34,7 +34,7 @@ public class ShadowMapMasterRenderer implements Cleanable {
 	private Matrix4f offset = createOffset();
 
 	private ShadowMapEntityRenderer entityRenderer;
-
+	
 	/**
 	 * Creates instances of the important objects needed for rendering the scene
 	 * to the shadow map. This includes the {@link ShadowBox} which calculates

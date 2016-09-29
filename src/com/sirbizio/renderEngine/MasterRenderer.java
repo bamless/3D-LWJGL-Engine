@@ -62,14 +62,14 @@ public class MasterRenderer implements Cleanable {
 	}
 	
 	public void render(Light sun, Camera camera) {
-		//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-		
 		prepare();
 		shader.start();
 		shader.loadSkyColour(RED, GREEN, BLUE);
 		shader.loadLight(sun);
 		shader.loadViewMatrix(camera);
-		renderer.render(entities);
+		shader.loadToShadowDistance(shadowMapRenderer.getShadowDistance());
+		shader.loadMapSize(shadowMapRenderer.getShadowMapRes());
+		renderer.render(entities, shadowMapRenderer.getToShadowMapSpaceMatrix());
 		shader.stop();
 		
 		terrainShader.start();

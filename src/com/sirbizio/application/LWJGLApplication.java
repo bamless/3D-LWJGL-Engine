@@ -3,6 +3,7 @@ package com.sirbizio.application;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import com.sirbizio.input.InputAdapter;
 import com.sirbizio.input.InputProcessor;
@@ -44,6 +45,7 @@ public class LWJGLApplication implements Application {
 	@Override
 	public void onCreate() {
 		DisplayManager.createDisplay(config);
+		if(config.renderLines) GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		listener.onCreate();
 	}
 	

@@ -21,6 +21,11 @@ public class StaticShader extends ShaderProgram {
 	private int locationReflectivity;
 	private int locationUseFakeLighting;
 	private int locationSkyColour;
+	private int locationTextureSampler;
+	private int locationToShadowMapSpace;
+	private int locationShadowMap;
+	private int locationShadowDistance;
+	private int locationMapSize;
 	
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -44,6 +49,16 @@ public class StaticShader extends ShaderProgram {
 		locationReflectivity = getUniformLocation("reflectivity");
 		locationUseFakeLighting = getUniformLocation("useFakeLighting");
 		locationSkyColour = getUniformLocation("skyColour");
+		locationToShadowMapSpace = getUniformLocation("toShadowMapSpace");
+		locationShadowMap = getUniformLocation("shadowMap");
+		locationTextureSampler = getUniformLocation("textureSampler");
+		locationShadowDistance = getUniformLocation("shadowDistance");
+		locationMapSize = getUniformLocation("mapSize");
+	}
+	
+	public void connectTextureUnits() {
+		loadInt(locationTextureSampler, 0);
+		loadInt(locationShadowMap, 5);
 	}
 	
 	public void loadSkyColour(float r, float g, float b) {
@@ -75,6 +90,18 @@ public class StaticShader extends ShaderProgram {
 
 	public void loadProjectionMatrix(Matrix4f matrix) {
 		loadMatrix(locationProjectionMatrix, matrix);
+	}
+	
+	public void loadToShadowSpaceMatrix(Matrix4f mat) {
+		loadMatrix(locationToShadowMapSpace, mat);
+	}
+	
+	public void loadToShadowDistance(float distance) {
+		loadFloat(locationShadowDistance, distance);
+	}
+	
+	public void loadMapSize(int size) {
+		loadFloat(locationMapSize, (float) size);
 	}
 
 }

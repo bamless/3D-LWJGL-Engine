@@ -43,6 +43,8 @@ public class Test implements ApplicationListener {
 	private Random rand = new Random();
 	private boolean isActive = true;
 	
+	private float stateTime;
+	
 	@Override
 	public void onCreate() {
 		//creates loader, renderer and camera
@@ -109,12 +111,13 @@ public class Test implements ApplicationListener {
 		dragon.getPosition().y = terrain.getHeightOfTerrain(dragon.getPosition().x, dragon.getPosition().z);
 		
 		//********LIGHT CAMERA N' STUFF*******
-		sun = new Light(new Vector3f(-1000000, 1000000, -1000000), new Vector3f(1.3f, 1.3f, 1.3f));
+		sun = new Light(new Vector3f(100000, 100000, -100000), new Vector3f(1.5f, 1.5f, 1.5f));
 	}
 
 	@Override
 	public void render() {
 		if(isActive) {
+			stateTime += DisplayManager.getDelta();
 			camera.move(terrain);
 			player.move(terrain);
 			dragon.increaseRotation(0, 2 * DisplayManager.getDelta() * 60, 0);

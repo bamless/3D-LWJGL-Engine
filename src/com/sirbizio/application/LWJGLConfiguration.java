@@ -7,4 +7,5 @@ public class LWJGLConfiguration {
 	public boolean logFPS = false;
 	public boolean fullscreen = false;
 	public boolean vsync = false;
+	public boolean renderLines = false;
 }
