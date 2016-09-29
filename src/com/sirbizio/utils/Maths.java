@@ -42,8 +42,8 @@ public final class Maths {
 
 	/**
 	 * Barycentric interpolation. 
-	 * Given a 3D triangle and a 2D position inside it returns
-	 * it's height.
+	 * Given a 3D triangle and a 2D point inside it returns
+	 * the point's height.
 	 * @param p1, p2, p3 the triangle vertices
 	 * @param pos the 2D position of the point
 	 * @return the point's height
