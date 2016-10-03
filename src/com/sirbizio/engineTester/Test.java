@@ -1,6 +1,7 @@
 package com.sirbizio.engineTester;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -93,17 +94,17 @@ public class Test implements ApplicationListener {
 		grassModel.getTexture().setHasTransparency(true);
 		grassModel.getTexture().setUseFakeLighting(true);
 		
-		for(int i = 0 ; i < 100 ; i++) {
+		for(int i = 0 ; i < 50 ; i++) {
 			Entity tree = new Entity(treeModel, rand.nextInt(1600), 0, -rand.nextInt(800));
 			tree.getPosition().y = terrain.getHeightOfTerrain(tree.getPosition().x, tree.getPosition().z);
 			entities.add(tree);
 		}
-		for(int i = 0 ; i < 250 ; i++) {
+		for(int i = 0 ; i < 100 ; i++) {
 			Entity fern = new Entity(fernModel, rand.nextInt(1600), 0, -rand.nextInt(800));
 			fern.getPosition().y = terrain.getHeightOfTerrain(fern.getPosition().x, fern.getPosition().z);
 			entities.add(fern);
 		}
-		for(int i = 0 ; i < 3500 ; i++) {
+		for(int i = 0 ; i < 350 ; i++) {
 			Entity grass = new Entity(grassModel, rand.nextInt(1600), 0, -rand.nextInt(800));
 			grass.getPosition().y = terrain.getHeightOfTerrain(grass.getPosition().x, grass.getPosition().z);
 			entities.add(grass);
@@ -111,7 +112,7 @@ public class Test implements ApplicationListener {
 		dragon.getPosition().y = terrain.getHeightOfTerrain(dragon.getPosition().x, dragon.getPosition().z);
 		
 		//********LIGHT CAMERA N' STUFF*******
-		sun = new Light(new Vector3f(100000, 100000, -100000), new Vector3f(1.5f, 1.5f, 1.5f));
+		sun = new Light(new Vector3f(0, 0, -10000), new Vector3f(1.3f, 1.3f, 1.3f));
 	}
 
 	@Override
@@ -121,8 +122,12 @@ public class Test implements ApplicationListener {
 			camera.move(terrain);
 			player.move(terrain);
 			dragon.increaseRotation(0, 2 * DisplayManager.getDelta() * 60, 0);
+			
+			Vector3f sunPos = sun.getPosition();
+			sunPos.x = (100000 * (float) Math.cos(stateTime * 0.02)) + 10000;
+			sunPos.y = 100000 * (float) Math.sin(stateTime * 0.02); 
 
-			renderer.renderShadowMap(entities, sun);
+			renderer.renderShadowMap(entities, Arrays.asList(new Terrain[] {terrain}), sun);
 
 			for (Entity e : entities)
 				renderer.processEntity(e);

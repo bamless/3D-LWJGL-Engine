@@ -102,7 +102,7 @@ public class MasterRenderer implements Cleanable {
 	}
 	
 	/**
-	 * Prepare OpenGL to render the model (cleans the screen)
+	 * Prepare OpenGL to render the model (clears the screen)
 	 */
 	public void prepare() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);// enables the depth test
@@ -127,10 +127,10 @@ public class MasterRenderer implements Cleanable {
 		projectionMatrix.m33 = 0;
 	}
 	
-	public void renderShadowMap(List<Entity> entitiesList, Light sun) {
+	public void renderShadowMap(List<Entity> entitiesList, List<Terrain> terrains, Light sun) {
 		for(Entity e : entitiesList)
 			processEntity(e);
-		shadowMapRenderer.render(entities, sun);
+		shadowMapRenderer.render(entities, terrains, sun);
 		entities.clear();
 	}
 	

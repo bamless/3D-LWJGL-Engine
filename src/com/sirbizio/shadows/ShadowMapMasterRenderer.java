@@ -13,6 +13,7 @@ import com.sirbizio.entities.Camera;
 import com.sirbizio.entities.Entity;
 import com.sirbizio.entities.Light;
 import com.sirbizio.models.TexturedModel;
+import com.sirbizio.terrains.Terrain;
 
 /**
  * This class is in charge of using all of the classes in the shadows package to
@@ -34,6 +35,7 @@ public class ShadowMapMasterRenderer implements Cleanable {
 	private Matrix4f offset = createOffset();
 
 	private ShadowMapEntityRenderer entityRenderer;
+	private ShadowMapTerrainRenderer terrainRenderer;
 	
 	/**
 	 * Creates instances of the important objects needed for rendering the scene
@@ -51,6 +53,7 @@ public class ShadowMapMasterRenderer implements Cleanable {
 		shadowBox = new ShadowBox(lightViewMatrix, camera);
 		shadowFbo = new ShadowFrameBuffer(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE);
 		entityRenderer = new ShadowMapEntityRenderer(shader, projectionViewMatrix);
+		terrainRenderer = new ShadowMapTerrainRenderer(shader, projectionViewMatrix);
 	}
 
 	/**
@@ -68,12 +71,13 @@ public class ShadowMapMasterRenderer implements Cleanable {
 	 * @param sun
 	 *            - the light acting as the sun in the scene.
 	 */
-	public void render(Map<TexturedModel, List<Entity>> entities, Light sun) {
+	public void render(Map<TexturedModel, List<Entity>> entities, List<Terrain> terrains, Light sun) {
 		shadowBox.update();
 		Vector3f sunPosition = sun.getPosition();
 		Vector3f lightDirection = new Vector3f(-sunPosition.x, -sunPosition.y, -sunPosition.z);
 		prepare(lightDirection, shadowBox);
 		entityRenderer.render(entities);
+		terrainRenderer.render(terrains);
 		finish();
 	}
 

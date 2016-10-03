@@ -27,20 +27,23 @@ const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
 void main(void) {
 
+	//PCF shadow mapping
 	float texelSize = 1 / mapSize;
 	float total = 0.0;
 	
 	for(int x=-pcfCount ; x<=pcfCount; x++) {
 		for(int y=-pcfCount ; y<=pcfCount; y++) {
-			float objectNearestLight = 1.0 - texture(shadowMap, shadowCoords.xyz + vec3(x, y, 0.0) * texelSize);
+			float objectNearestLight = 1.0 - texture(shadowMap, shadowCoords.xyz + vec3(0.0, 0.0, -0.003) + vec3(x, y, 0.0) * texelSize);
 			total += objectNearestLight;
 		}
 	}
 	
 	total /= totalTexels;
 	
+	//light factor for shadow mapping
 	float lightFactor = 1.0 - (total * shadowCoords.w);
 
+	//blend map texturing
 	vec4 blendMapColour = texture(blendMap, pass_textureCoords);
 	
 	float backTextureAmount = 1 - (blendMapColour.r, blendMapColour.g, blendMapColour.b);

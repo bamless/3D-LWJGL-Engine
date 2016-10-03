@@ -14,7 +14,8 @@ import com.sirbizio.entities.Camera;
 public final class Maths {
 
 	/**Private constructor assures the class can't be instantiated*/
-	private Maths() {}
+	private Maths() {
+	}
 
 	/**Creates a transformation matrix given the rotation,translation and scale*/
 	public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale) {

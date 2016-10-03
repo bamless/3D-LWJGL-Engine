@@ -8,8 +8,8 @@ public class Launcher {
 	public static void main(String[] args) {
 		LWJGLConfiguration config = new LWJGLConfiguration();
 		config.limitFPS = 60;
-		config.width = 800;
-		config.height = 600;
+		config.width = 1280;
+		config.height = 720;
 		config.fullscreen = true;
 		config.vsync = true;
 		LWJGLApplication.create(new Test(), config);
