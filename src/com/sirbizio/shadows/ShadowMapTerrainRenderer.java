@@ -25,15 +25,12 @@ public class ShadowMapTerrainRenderer {
 	}
 	
 	public void render(List<Terrain> terrains) {
-		GL11.glDisable(GL11.GL_CULL_FACE);
 		for(Terrain terrain : terrains) {
 			prepareTerrain(terrain);
 			loadModelMatrix(terrain);
 			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
 	}
 
 	private void prepareTerrain(Terrain terrain) {

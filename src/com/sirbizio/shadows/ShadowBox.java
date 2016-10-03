@@ -21,10 +21,10 @@ import com.sirbizio.renderEngine.MasterRenderer;
  */
 public class ShadowBox {
 
-	private static final float OFFSET = 30;
+	private static final float OFFSET = 250;
 	private static final Vector4f UP = new Vector4f(0, 1, 0, 0);
 	private static final Vector4f FORWARD = new Vector4f(0, 0, -1, 0);
-	public static final float SHADOW_DISTANCE = 150;
+	public static final float SHADOW_DISTANCE = 250;
 
 	private float minX, maxX;
 	private float minY, maxY;

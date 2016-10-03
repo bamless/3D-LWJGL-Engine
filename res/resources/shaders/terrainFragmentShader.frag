@@ -33,7 +33,7 @@ void main(void) {
 	
 	for(int x=-pcfCount ; x<=pcfCount; x++) {
 		for(int y=-pcfCount ; y<=pcfCount; y++) {
-			float objectNearestLight = 1.0 - texture(shadowMap, shadowCoords.xyz + vec3(0.0, 0.0, -0.003) + vec3(x, y, 0.0) * texelSize);
+			float objectNearestLight = 1.0 - texture(shadowMap, shadowCoords.xyz + vec3(0.0, 0.0, -0.002) + vec3(x, y, 0.0) * texelSize);
 			total += objectNearestLight;
 		}
 	}

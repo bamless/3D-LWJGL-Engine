@@ -51,8 +51,8 @@ public class Test implements ApplicationListener {
 		//creates loader, renderer and camera
 		loader = new Loader();
 		
-		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("person")), 
-				new ModelTexture(loader.loadTexture("playerTexture"))), 0, 0, 0);
+		player = new Player(new TexturedModel(loader.loadToVao(OBJFileLoader.loadOBJ("bunny")), 
+				new ModelTexture(loader.loadTexture("white"))), 0, 0, 0);
 		entities.add(player);
 		//creates the camera
 		camera = new Camera(player);
@@ -112,7 +112,7 @@ public class Test implements ApplicationListener {
 		dragon.getPosition().y = terrain.getHeightOfTerrain(dragon.getPosition().x, dragon.getPosition().z);
 		
 		//********LIGHT CAMERA N' STUFF*******
-		sun = new Light(new Vector3f(0, 0, -10000), new Vector3f(1.3f, 1.3f, 1.3f));
+		sun = new Light(new Vector3f(0, 0, -10000), new Vector3f(1, 1, 1));
 	}
 
 	@Override
@@ -124,8 +124,12 @@ public class Test implements ApplicationListener {
 			dragon.increaseRotation(0, 2 * DisplayManager.getDelta() * 60, 0);
 			
 			Vector3f sunPos = sun.getPosition();
-			sunPos.x = (100000 * (float) Math.cos(stateTime * 0.02)) + 10000;
-			sunPos.y = 100000 * (float) Math.sin(stateTime * 0.02); 
+			sunPos.x = (100000 * (float) Math.cos(stateTime * 0.03)) + 10000;
+			sunPos.y = 100000 * (float) Math.sin(stateTime * 0.03);
+			Vector3f sunCol = sun.getColour();
+			sunCol.x = 1 * Math.max(Math.min(sunPos.y/40000, 1), 0);
+			sunCol.y = 1 * Math.max(Math.min(sunPos.y/60000, 1), 0);
+			sunCol.z = 1 * Math.max(Math.min(sunPos.y/65000, 1), 0);
 
 			renderer.renderShadowMap(entities, Arrays.asList(new Terrain[] {terrain}), sun);
 

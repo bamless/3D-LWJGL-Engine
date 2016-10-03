@@ -1,6 +1,7 @@
 package com.sirbizio.entities;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector3f;
 
 import com.sirbizio.models.TexturedModel;
 import com.sirbizio.renderEngine.DisplayManager;
@@ -20,7 +21,7 @@ public class Player extends Entity {
 	private boolean isInAir;
 	
 	public Player(TexturedModel model, float x, float y, float z) {
-		super(model, x, y, z);
+		super(model, new Vector3f(x, y, z), 0, 0, 0, 1);
 	}
 
 	public void move(Terrain terrain) {
