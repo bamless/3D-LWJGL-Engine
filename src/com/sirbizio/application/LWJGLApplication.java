@@ -11,35 +11,32 @@ import com.sirbizio.renderEngine.DisplayManager;
 
 public class LWJGLApplication implements Application {
 	
-	private static LWJGLApplication app;
-	private static LWJGLConfiguration config;
-	
+	private LWJGLConfiguration config;
 	private ApplicationListener listener;
 	private InputProcessor inputProcessor;
+	
 	private boolean hasFocus;
 	private boolean exit;
 	
-	public static void create(ApplicationListener listener, LWJGLConfiguration configuration) {
-		if(app != null) throw new RuntimeException("An application already exists. Only one application can be created at any time!");
-		config = configuration;
-		app = new LWJGLApplication(listener);
-		app.start();
-	}
 	
-	public static LWJGLApplication getInstance() {
-		if(app == null) throw new RuntimeException("You need to create an application first!");
-		return app;
-	}
-	
-	private LWJGLApplication(ApplicationListener listener) {
+	public LWJGLApplication(ApplicationListener listener, LWJGLConfiguration config) {
 		this.listener = listener;
 		this.inputProcessor = new InputAdapter();
+		this.config = config;
+		
+		// Set the application in the context
+		Context.app = this;
+		// Launch main loop thread
+		start();
 	}
 	
+	/** Launches the main loop thread */
 	private void start() {
-		app.onCreate();
-		app.mainLoop();
-		app.cleanUp();
+		new Thread(() -> {
+			onCreate();
+			mainLoop();
+			cleanUp();
+		}).start();
 	}
 	
 	@Override
@@ -99,17 +96,18 @@ public class LWJGLApplication implements Application {
 		}
 	}
 	
-	@Override
-	public void cleanUp() {
+	private void cleanUp() {
 		listener.onPause();
 		listener.cleanUp();
 		DisplayManager.closeDisplay();
 	}
 	
-	public static void exit() {
-		app.exit = true;
+	@Override
+	public void exit() {
+		exit = true;
 	}
 	
+	@Override
 	public void setInputProcessor(InputProcessor processor) {
 		this.inputProcessor = processor;
 	}

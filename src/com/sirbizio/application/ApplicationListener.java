@@ -2,8 +2,8 @@ package com.sirbizio.application;
 
 /**
  * Models an applicationListener. This is the entry point in the framework.
- * You need to instantiate the class that implements this interface in the launcher, in the constructor
- * of the Application.
+ * You need to instantiate the class that implements this interface in the launcher, and pass it
+ * the constructor of the Application.
  * @author Fabrizio
  *
  */

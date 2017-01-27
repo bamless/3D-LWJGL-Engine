@@ -10,8 +10,8 @@ public class Launcher {
 		config.limitFPS = 60;
 		config.width = 1920;
 		config.height = 1080;
-		config.fullscreen = true;
-		config.vsync = false;
-		LWJGLApplication.create(new Test(), config);
+		config.fullscreen = false;
+		config.vsync = true;
+		new LWJGLApplication(new Test(), config);
 	}
 }

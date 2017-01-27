@@ -2,7 +2,7 @@ package com.sirbizio.input;
 
 import org.lwjgl.input.Keyboard;
 
-import com.sirbizio.application.LWJGLApplication;
+import com.sirbizio.application.Context;
 
 public class InputAdapter implements InputProcessor {
 
@@ -19,7 +19,8 @@ public class InputAdapter implements InputProcessor {
 	@Override
 	public boolean keyPressed(int keyCode) {
 		if(keyCode == Keyboard.KEY_ESCAPE) {
-			LWJGLApplication.exit();
+			Context.app().exit();
+			return true;
 		}
 		return false;
 	}

@@ -7,7 +7,7 @@ import com.sirbizio.input.InputProcessor;
  * @author Fabrizio
  *
  */
-public interface Application extends Cleanable {
+public interface Application {
 
 	/**Called when the application is first instantiated*/
 	void onCreate();
@@ -20,5 +20,8 @@ public interface Application extends Cleanable {
 	
 	/**Sets a {@link InputProcessor} */
 	void setInputProcessor(InputProcessor processor);
+	
+	/**Makes the application stop*/
+	void exit();
 	
 }
