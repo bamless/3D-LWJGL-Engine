@@ -1,7 +1,16 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 
-sourceSets.main.java.srcDirs = [ "src/", "res/" ]
+sourceSets {
+        main {
+                java {
+                        srcDirs= ["src/"]
+                }
+                resources {
+                        srcDirs= ["res"]
+                }
+        }
+}
 
 repositories {
 	mavenLocal()
@@ -9,8 +18,13 @@ repositories {
 }
 
 dependencies {
-    compile 'org.lwjgl.lwjgl:lwjgl:2.9.3'
+	compile 'org.lwjgl.lwjgl:lwjgl:2.9.3'
 	compile 'org.lwjgl.lwjgl:lwjgl-platform:2.9.3'
-    compile 'org.lwjgl.lwjgl:lwjgl_util:2.9.3'
-    compile 'org.slick2d:slick2d-core:1.0.2'
+	compile 'org.lwjgl.lwjgl:lwjgl_util:2.9.3'
+	compile 'org.slick2d:slick2d-core:1.0.2'
+}
+
+task execute(type:JavaExec) {
+   main = "com.sirbizio.engineTester.Launcher"
+   classpath = sourceSets.main.runtimeClasspath
 }
