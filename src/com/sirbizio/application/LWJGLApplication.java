@@ -10,7 +10,6 @@ import com.sirbizio.input.InputProcessor;
 import com.sirbizio.renderEngine.DisplayManager;
 
 public class LWJGLApplication implements Application {
-	
 	private LWJGLConfiguration config;
 	private ApplicationListener listener;
 	private InputProcessor inputProcessor;
@@ -41,6 +40,9 @@ public class LWJGLApplication implements Application {
 	
 	@Override
 	public void onCreate() {
+		SharedLibraryLoader.load();
+		
+		
 		DisplayManager.createDisplay(config);
 		if(config.renderLines) GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		listener.onCreate();
