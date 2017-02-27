@@ -217,7 +217,7 @@ public class SharedLibraryLoader {
 	/** Returns a path to a file that can be written. Tries multiple locations and verifies writing succeeds. */
 	private File getExtractedFile (String dirName, String fileName) {
 		// Temp directory with username in path.
-		File idealFile = new File(System.getProperty("java.io.tmpdir") + "/libgdx" + System.getProperty("user.name") + "/"
+		File idealFile = new File(System.getProperty("java.io.tmpdir") + "/lwjgl-shared-libs" + System.getProperty("user.name") + "/"
 			+ dirName, fileName);
 		if (canWrite(idealFile)) return idealFile;
 
@@ -232,7 +232,7 @@ public class SharedLibraryLoader {
 		}
 
 		// User home.
-		File file = new File(System.getProperty("user.home") + "/.libgdx/" + dirName, fileName);
+		File file = new File(System.getProperty("user.home") + "/.lwjgl-shared-libs/" + dirName, fileName);
 		if (canWrite(file)) return file;
 
 		// Relative directory.
@@ -332,7 +332,7 @@ public class SharedLibraryLoader {
 		}
 
 		// User home.
-		file = new File(System.getProperty("user.home") + "/.libgdx/" + sourceCrc, fileName);
+		file = new File(System.getProperty("user.home") + "/.lwjgl-shared-libs/" + sourceCrc, fileName);
 		if (loadFile(sourcePath, sourceCrc, file) == null) return;
 
 		// Relative directory.
