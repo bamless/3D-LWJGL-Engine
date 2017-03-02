@@ -20,7 +20,7 @@ dependencies {
 	compile 'org.slick2d:slick2d-core:1.0.2'
 }
 
-task execute(type:JavaExec) {
+task run(type:JavaExec) {
    main = "com.sirbizio.engineTester.Launcher"
    classpath = sourceSets.main.runtimeClasspath
 }
