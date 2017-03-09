@@ -10,7 +10,7 @@ With an IDE:
 
 # How to launch
 Without an IDE:
-- Run from terminal **gradle execute**
+- Run from terminal **gradle run**
 
 With an IDE:
 - Launch the Launcher class in com.sirbizio.engineTester
